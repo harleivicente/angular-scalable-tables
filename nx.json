@@ -1,0 +1,22 @@
+{
+  "npmScope": "ui",
+  "implicitDependencies": {
+    "angular.json": "*",
+    "package.json": {
+      "dependencies": "*",
+      "devDependencies": "*"
+    },
+    "tsconfig.json": "*",
+    "tslint.json": "*",
+    "nx.json": "*"
+  },
+  "projects": {
+    "treino": {
+      "tags": []
+    },
+    "treino-e2e": {
+      "tags": [],
+      "implicitDependencies": ["treino"]
+    }
+  }
+}
