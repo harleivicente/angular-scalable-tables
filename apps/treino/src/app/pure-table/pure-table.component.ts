@@ -9,9 +9,19 @@ export interface PureTableState {
   data: any[];
   orderBy: string;
   orderDirection: 'ASC' | 'DESC';
+  columns: { id: string, visible: boolean }[];
 }
 
-export interface DataRequest {
+export interface DataRequestResponse {
+  totalPages: number;
+  currentPage: number;
+  pageSize: number;
+  data: any[];
+  orderBy: string;
+  orderDirection: 'ASC' | 'DESC';
+}
+
+export interface DataRequestFilter {
   pageSize: number;
   currentPage: number;
   orderBy: string;
@@ -21,11 +31,28 @@ export interface DataRequest {
 const data = [
   {
     nome: 'Harlei Vicente',
-    idade: 31
+    idade: 31,
+    cpf: '123.454.343-54'
+  },
+  {
+    nome: 'Harlei Vicente',
+    idade: 31,
+    cpf: '123.454.343-54'
+  },
+  {
+    nome: 'Harlei Vicente',
+    idade: 31,
+    cpf: '123.454.343-54'
+  },
+  {
+    nome: 'Harlei Vicente',
+    idade: 31,
+    cpf: '123.454.343-54'
   },
   {
     nome: 'Geovana Melo',
-    idade: 26
+    idade: 26,
+    cpf: '123.454.343-54'
   }
 ];
 
@@ -42,7 +69,12 @@ export class PureTableComponent implements OnInit {
     pageSize: 5,
     data,
     orderBy: null,
-    orderDirection: null
+    orderDirection: null,
+    columns: [
+      { id: 'nome', visible: true },
+      { id: 'idade', visible: true },
+      { id: 'cpf', visible: true }
+    ]
   });
 
   constructor() {}
@@ -53,22 +85,18 @@ export class PureTableComponent implements OnInit {
     return this.pureTableState$.value;
   }
 
-  refetchData(params: Partial<DataRequest>) {
-    const currentRequest = {
-      pageSize: this.state.pageSize,
-      currentPage: this.state.currentPage,
-      orderBy: this.state.orderBy,
-      orderDirection: this.state.orderDirection
-    };
+  isColumnVisible(id) {
+    return this.state.columns.find(column => column.id === id).visible;
+  }
 
-    const updatedRequest = {
-      ...currentRequest,
-      ...params
-    };
-
-    this.fetchData(updatedRequest).subscribe(result => {
-      this.pureTableState$.next(result);
+  updateColumnVisibily(columnId, visible) {
+    const columns = Object.assign([], this.state.columns);
+    columns.forEach(column => {
+      if (column.id === columnId) {
+        column.visible = visible;
+      }
     });
+    this.patchTableState({ columns });
   }
 
   changeOrder(column) {
@@ -104,7 +132,37 @@ export class PureTableComponent implements OnInit {
     })
   }
 
-  fetchData(request: DataRequest): Observable<PureTableState> {
+  refetchData(params: Partial<DataRequestFilter>) {
+
+    const {
+      pageSize,
+      currentPage,
+      orderBy,
+      orderDirection
+    } = this.state;
+
+    const updatedRequest = {
+        pageSize,
+        currentPage,
+        orderBy,
+        orderDirection,
+      ...params
+    };
+
+    this.fetchData(updatedRequest).subscribe(dataResponse => {
+      this.patchTableState(dataResponse);
+    });
+  }
+
+  patchTableState(statePatch: Partial<PureTableState>) {
+    const currentState = this.state;
+    this.pureTableState$.next({
+      ...currentState,
+      ...statePatch
+    });
+  }
+
+  fetchData(request: DataRequestFilter): Observable<DataRequestResponse> {
     return of({
       ...request,
       totalPages: 10,
