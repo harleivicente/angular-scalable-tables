@@ -1,4 +1,4 @@
-<h1> CDK table </h1>
+<!-- <h1> CDK table </h1>
 
 <table cdk-table [dataSource]="dados">
 
@@ -16,7 +16,6 @@
   <tr cdk-row *cdkRowDef="let row; columns: colunas;"></tr>
 
 </table>
-
 
 <h1> Pacto table </h1>
 
@@ -38,31 +37,10 @@
   </ng-container>
 
   <tr pacto-header-row *uiHeaderRowDef="[]"></tr>
-  <!-- <tr pacto-row *pactoRowDef="let row; columns: colunas"></tr> -->
-
-</table>
-
-<button (click)="click()"> Nova coluna </button>
-
-
-
-<table class="pure-table">
-  <thead>
-    <tr>
-      <th> Name </th>
-      <th> Idade </th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let item of items">
-      <td> {{ item.nome }} </td>
-      <td> {{ item.idade }} </td>
-    </tr>
-  </tbody>
 </table>
 
 
+<button (click)="click()"> Nova coluna </button> -->
 
-<h1 *ngFor="let item of items">
 
-</h1>
+<ui-pure-table></ui-pure-table>

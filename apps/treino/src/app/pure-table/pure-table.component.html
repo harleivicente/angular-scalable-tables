@@ -1,0 +1,48 @@
+<table class="pure-table">
+    <thead>
+      <tr>
+        <th> 
+          Nome 
+          <button (click)="changeOrder('nome')"> 
+            <ng-container *ngIf="state.orderBy !== 'nome'"> (-) </ng-container>
+            <ng-container *ngIf="state.orderBy == 'nome' && state.orderDirection == 'ASC'"> (A) </ng-container>
+            <ng-container *ngIf="state.orderBy == 'nome' && state.orderDirection == 'DESC'"> (D) </ng-container>
+          </button>
+        </th>
+        <th> 
+          Idade 
+          <button (click)="changeOrder('idade')"> 
+            <ng-container *ngIf="state.orderBy !== 'idade'"> (-) </ng-container>
+            <ng-container *ngIf="state.orderBy == 'idade' && state.orderDirection == 'ASC'"> (A) </ng-container>
+            <ng-container *ngIf="state.orderBy == 'idade' && state.orderDirection == 'DESC'"> (D) </ng-container>
+          </button>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of state.data">
+        <td> {{ item.nome }} </td>
+        <td> {{ item.idade }} </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <div class="footer-controls">
+  
+    <div> Mostrando {{ state.data.length }} de {{ state.totalPages }} </div>
+  
+    <div>
+      Page size: 
+      <button (click)="changePageSize(5)" [ngClass]="{ bold: state.pageSize === 5 }"> 5 </button>
+      <button (click)="changePageSize(10)" [ngClass]="{ bold: state.pageSize === 10 }"> 10 </button>
+    </div>
+  
+    <div>
+      Current Page: 
+      <button (click)="changeCurrentPage(1)" [ngClass]="{ bold: state.currentPage === 1 }"> 1 </button>
+      <button (click)="changeCurrentPage(2)" [ngClass]="{ bold: state.currentPage === 2 }"> 2 </button>
+      <button (click)="changeCurrentPage(3)" [ngClass]="{ bold: state.currentPage === 3 }"> 3 </button>
+      <button (click)="changeCurrentPage(4)" [ngClass]="{ bold: state.currentPage === 4 }"> 4 </button>
+    </div>
+  
+  </div>

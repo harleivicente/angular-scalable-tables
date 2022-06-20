@@ -1,6 +1,6 @@
 import { CollectionViewer, DataSource } from '@angular/cdk/collections';
 import { Component, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 
 @Component({
   selector: 'ui-root',
@@ -10,9 +10,8 @@ import { Observable, of } from 'rxjs';
 export class AppComponent implements OnInit {
   dados = new FonteDados();
   colunas = ['nome', 'idade'];
-  items = data;
 
-  constructor( ) {}
+  constructor() {}
 
   ngOnInit() {}
 

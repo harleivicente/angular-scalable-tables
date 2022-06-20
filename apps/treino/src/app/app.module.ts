@@ -12,6 +12,7 @@ import { TableHeadComponent } from './table-head/table-head.component';
 import { HeaderRowDefDirective } from './header-row-def.directive';
 import { HeaderCellDefDirective } from './header-cell-def.directive';
 import { CellDefDirective } from './cell-def.directive';
+import { PureTableComponent } from './pure-table/pure-table.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { CellDefDirective } from './cell-def.directive';
     TableHeadComponent,
     HeaderRowDefDirective,
     HeaderCellDefDirective,
-    CellDefDirective
+    CellDefDirective,
+    PureTableComponent
   ],
   imports: [
     CommonModule,
