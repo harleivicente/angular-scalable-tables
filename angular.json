@@ -21,8 +21,14 @@
             "polyfills": "apps/treino/src/polyfills.ts",
             "tsConfig": "apps/treino/tsconfig.app.json",
             "aot": false,
-            "assets": ["apps/treino/src/favicon.ico", "apps/treino/src/assets"],
-            "styles": ["apps/treino/src/styles.scss"],
+            "assets": [
+              "apps/treino/src/favicon.ico",
+              "apps/treino/src/assets"
+            ],
+            "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
+              "apps/treino/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -81,7 +87,10 @@
               "apps/treino/tsconfig.app.json",
               "apps/treino/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/treino/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/treino/**"
+            ]
           }
         },
         "test": {
@@ -115,8 +124,13 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": ["apps/treino-e2e/tsconfig.e2e.json"],
-            "exclude": ["**/node_modules/**", "!apps/treino-e2e/**"]
+            "tsConfig": [
+              "apps/treino-e2e/tsconfig.e2e.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/treino-e2e/**"
+            ]
           }
         }
       }
