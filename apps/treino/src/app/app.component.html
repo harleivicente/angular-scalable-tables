@@ -1,6 +1,6 @@
-<!-- <h1> CDK table </h1>
+<h1> CDK table </h1>
 
-<table cdk-table [dataSource]="dados">
+  <table cdk-table [dataSource]="dados">
 
   <ng-container cdkColumnDef="nome">
     <th cdk-header-cell *cdkHeaderCellDef> Nome </th>
@@ -17,33 +17,6 @@
 
 </table>
 
-<h1> Pacto table </h1>
 
-<table uiPactoDataTable>
-
-  <ng-container uiColumnDef="nome">
-    <th pacto-header-cell *uiHeaderCellDef > Nome </th>
-    <th pacto-cell *uiCellDef="let element"> {{ element.nome }} </th>
-  </ng-container>
-
-  <ng-container uiColumnDef="idade">
-    <th pacto-header-cell *uiHeaderCellDef > Idade </th>
-    <th pacto-cell *uiCellDef="let element"> {{ element.idade }} </th>
-  </ng-container>
-
-  <ng-container uiColumnDef="eita">
-    <th pacto-header-cell *uiHeaderCellDef > Eita </th>
-    <th pacto-cell *uiCellDef="let element"> {{ element.eita }} </th>
-  </ng-container>
-
-  <tr pacto-header-row *uiHeaderRowDef="[]"></tr>
-</table>
-
-
-<button (click)="click()"> Nova coluna </button> -->
-
-<ng-template></ng-template>
-
-<ng-container></ng-container>
 
 <ui-pure-table></ui-pure-table>
