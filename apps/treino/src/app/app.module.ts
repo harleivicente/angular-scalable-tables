@@ -7,11 +7,17 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { PureTableComponent } from './pure-table/pure-table.component';
+import { UiSquaresComponent } from './ui-squares/ui-squares/ui-squares.component';
+import { SquareGameDirective } from './ui-squares/square-game.directive';
+import { SquareDirective } from './ui-squares/square.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PureTableComponent
+    PureTableComponent,
+    UiSquaresComponent,
+    SquareGameDirective,
+    SquareDirective
   ],
   imports: [
     CommonModule,

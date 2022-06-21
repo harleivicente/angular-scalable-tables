@@ -35,21 +35,6 @@ const data = [
     cpf: '123.454.343-54'
   },
   {
-    nome: 'Harlei Vicente',
-    idade: 31,
-    cpf: '123.454.343-54'
-  },
-  {
-    nome: 'Harlei Vicente',
-    idade: 31,
-    cpf: '123.454.343-54'
-  },
-  {
-    nome: 'Harlei Vicente',
-    idade: 31,
-    cpf: '123.454.343-54'
-  },
-  {
     nome: 'Geovana Melo',
     idade: 26,
     cpf: '123.454.343-54'

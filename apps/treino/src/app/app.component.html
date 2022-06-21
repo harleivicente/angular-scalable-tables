@@ -1,22 +1,3 @@
-<h1> CDK table </h1>
-
-  <table cdk-table [dataSource]="dados">
-
-  <ng-container cdkColumnDef="nome">
-    <th cdk-header-cell *cdkHeaderCellDef> Nome </th>
-    <td cdk-cell *cdkCellDef="let element"> {{element.nome}} </td>
-  </ng-container>
-
-  <ng-container cdkColumnDef="idade">
-    <th cdk-header-cell *cdkHeaderCellDef> Idade </th>
-    <td cdk-cell *cdkCellDef="let element"> {{element.idade}} </td>
-  </ng-container>
-
-  <tr header cdk-header-row *cdkHeaderRowDef="colunas"></tr>
-  <tr cdk-row *cdkRowDef="let row; columns: colunas;"></tr>
-
-</table>
-
-
-
 <ui-pure-table></ui-pure-table>
+
+<ui-ui-squares></ui-ui-squares>
