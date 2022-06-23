@@ -10,6 +10,8 @@ import { PureTableComponent } from './pure-table/pure-table.component';
 import { UiSquaresComponent } from './ui-squares/ui-squares/ui-squares.component';
 import { SquareGameDirective } from './ui-squares/square-game.directive';
 import { SquareDirective } from './ui-squares/square.directive';
+import { DataTableComponent } from './data-table/data-table.component';
+import { DataTableDirective } from './data-table.directive';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { SquareDirective } from './ui-squares/square.directive';
     PureTableComponent,
     UiSquaresComponent,
     SquareGameDirective,
-    SquareDirective
+    SquareDirective,
+    DataTableComponent,
+    DataTableDirective
   ],
   imports: [
     CommonModule,

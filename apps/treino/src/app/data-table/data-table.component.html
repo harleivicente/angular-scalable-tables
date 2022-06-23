@@ -1,0 +1,35 @@
+
+
+<table uiDataTable (filterUpdate)="filterUpdate($event)" #table=uiDataTable>
+
+    <div>
+        <p *ngFor="let item of table.data"> Id: {{ item.id }} </p>
+        <p *ngFor="let item of table.data"> Nome: {{ item.nome }} </p>
+        <p *ngFor="let item of table.data"> Cpf: {{ item.cpf }} </p>
+    </div>
+
+    <div>
+        <h4> Select Page </h4>
+        <button
+            [ngClass]="{ current: table.currentPage === 1 }" 
+            (click)="table.setCurrentPage(1)"> 1 
+        </button>
+        <button
+            [ngClass]="{ current: table.currentPage === 2 }" 
+            (click)="table.setCurrentPage(2)"> 2 
+        </button>
+    </div>
+
+    <div>
+        <h4> Page Size </h4>
+        <button
+            [ngClass]="{ current: table.pageSize === 10 }" 
+            (click)="table.setPageSize(10)"> 10
+        </button>
+        <button
+            [ngClass]="{ current: table.pageSize === 20 }" 
+            (click)="table.setPageSize(20)"> 20
+        </button>
+    </div>
+
+</table>
