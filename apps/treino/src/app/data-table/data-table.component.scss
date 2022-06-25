@@ -2,3 +2,31 @@
 button.current  {
     font-weight: bold;
 }
+
+table {
+    margin: 0px;
+    margin-top: 100px;
+    width: 100%;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background-color: beige;
+    padding: 0px;
+    border-spacing: 0px;
+
+    th {
+        padding: 0px;
+    }
+
+    tr {
+        padding: 0px;
+        margin: 0px;
+    }
+}
+
+th.image {
+    background-color: white;
+    border: 1px solid bisque;
+
+    img {
+        width: 30px;
+    }
+}

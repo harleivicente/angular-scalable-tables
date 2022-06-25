@@ -12,6 +12,9 @@ import { SquareGameDirective } from './ui-squares/square-game.directive';
 import { SquareDirective } from './ui-squares/square.directive';
 import { DataTableComponent } from './data-table/data-table.component';
 import { DataTableDirective } from './data-table.directive';
+import { TableHeaderCellDirective } from './table-header-cell.directive';
+import { TableColumnDirective } from './table-column.directive';
+import { TableCellDirective } from './table-cell.directive';
 
 @NgModule({
   declarations: [
@@ -21,7 +24,10 @@ import { DataTableDirective } from './data-table.directive';
     SquareGameDirective,
     SquareDirective,
     DataTableComponent,
-    DataTableDirective
+    DataTableDirective,
+    TableHeaderCellDirective,
+    TableColumnDirective,
+    TableCellDirective
   ],
   imports: [
     CommonModule,

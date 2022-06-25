@@ -2,11 +2,32 @@
 
 <table uiDataTable (filterUpdate)="filterUpdate($event)" #table=uiDataTable>
 
-    <div>
-        <p *ngFor="let item of table.data"> Id: {{ item.id }} </p>
-        <p *ngFor="let item of table.data"> Nome: {{ item.nome }} </p>
-        <p *ngFor="let item of table.data"> Cpf: {{ item.cpf }} </p>
-    </div>
+    <ng-container uiTableColumn="nome">
+        <th *uiTableHeaderCell> Nome </th>
+        <th (click)="clicked(item)" *uiTableCell="let item;"> {{ item?.nome }} </th>
+    </ng-container>
+    <ng-container uiTableColumn="idade">
+        <th *uiTableHeaderCell> Idade </th>
+        <th class="image" *uiTableCell="let item;"> 
+            <p> Idade </p>
+            <p>
+                {{ item?.idade }} 
+            </p>
+            <img src="https://gravatar.com/avatar/d1e3384d174406494db0f3a00995d88c?s=400&d=robohash&r=x">
+        </th>
+    </ng-container>
+    <ng-container uiTableColumn="cpf">
+        <th *uiTableHeaderCell> CPF </th>
+        <th *uiTableCell="let item;"> {{ item?.cpf }} </th>
+    </ng-container>
+
+    <div *uiTableLoading> Carregando dados </div>
+    
+    <div *uiTableError> Erro ao carregar </div>
+
+    
+</table>
+
 
     <div>
         <h4> Select Page </h4>
@@ -31,5 +52,3 @@
             (click)="table.setPageSize(20)"> 20
         </button>
     </div>
-
-</table>

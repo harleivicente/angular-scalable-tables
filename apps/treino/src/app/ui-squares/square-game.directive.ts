@@ -32,7 +32,6 @@ export class SquareGameDirective implements OnInit, AfterViewInit {
   }
 
   private renderSquares(squares: SquareDirective[]) {
-    console.log('render squares');
     this.viewContainerRef.clear();
     const gameContainerElementRef = this.elementRef.nativeElement;
 

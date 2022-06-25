@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataTableDirective, PactoDataTableFilter } from '../data-table.directive';
-import { Filter, MockService } from '../mock.service';
+import { Filter, MockService, Person } from '../mock.service';
 
 @Component({
   selector: 'ui-data-table',
@@ -18,6 +18,11 @@ export class DataTableComponent implements OnInit {
       pageSize: 10
     };
     this.updateTableData(initialFilter);
+  }
+
+  clicked(a) {
+    console.log(a);
+    
   }
 
   filterUpdate(filter: PactoDataTableFilter) {

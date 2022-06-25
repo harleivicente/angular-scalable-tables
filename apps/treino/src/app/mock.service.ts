@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-interface Person {
+export interface Person {
   id: number,
   nome: string,
   cpf: string,
+  idade: number
 }
 
 interface Result<T> {
@@ -31,17 +32,13 @@ export class MockService {
   constructor() {}
 
   getPeople(filter: Filter): Observable<Result<Person>> {
-    const delay = Math.trunc(Math.random() * 1);
+    const delay = Math.trunc(Math.random() * 0);
     return new Observable(observer => {
       setTimeout(() => {
         const result = {
           ...filter,
           totalPages: 4,
-          data: [{
-            id: 1,
-            nome: `Person 1`,
-            cpf: '343.334.321-43'
-          }]
+          data: makeListOfRandomPeople(filter.pageSize)
         };
 
         observer.next(result);
@@ -50,6 +47,25 @@ export class MockService {
     })
   }
 
+}
 
+function makeListOfRandomPeople(number) {
+  const result = [];
+  for (let index = 0; index < number; index++) {
+    result.push(makeRandomPerson());
+  }
+  return result;
+}
 
+function makeRandomPerson(): Person {
+  return {
+    cpf: '124.234.423-45',
+    id: random(),
+    idade: random(),
+    nome: `Person #${random()}`
+  }
+}
+
+function random() {
+  return Math.trunc(Math.random() * 10000);
 }
