@@ -33,11 +33,11 @@
         <h4> Select Page </h4>
         <button
             [ngClass]="{ current: table.currentPage === 1 }" 
-            (click)="table.setCurrentPage(1)"> 1 
+            (click)="table.stateManager.setCurrentPage(1)"> 1 
         </button>
         <button
             [ngClass]="{ current: table.currentPage === 2 }" 
-            (click)="table.setCurrentPage(2)"> 2 
+            (click)="table.stateManager.setCurrentPage(2)"> 2 
         </button>
     </div>
 
@@ -45,10 +45,10 @@
         <h4> Page Size </h4>
         <button
             [ngClass]="{ current: table.pageSize === 10 }" 
-            (click)="table.setPageSize(10)"> 10
+            (click)="table.stateManager.setPageSize(10)"> 10
         </button>
         <button
             [ngClass]="{ current: table.pageSize === 20 }" 
-            (click)="table.setPageSize(20)"> 20
+            (click)="table.stateManager.setPageSize(20)"> 20
         </button>
     </div>

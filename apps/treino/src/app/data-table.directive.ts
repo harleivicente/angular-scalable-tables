@@ -1,29 +1,14 @@
-import { AfterViewInit, ContentChildren, Directive, ElementRef, EmbeddedViewRef, EventEmitter, OnInit, Output, QueryList, Renderer2, ViewChildren, ViewContainerRef, ViewRef } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { AfterViewInit, ContentChildren, Directive, ElementRef, EmbeddedViewRef, EventEmitter, OnInit, Output, QueryList, Renderer2, Self, ViewContainerRef } from '@angular/core';
+import { PactoDataTableFilter, PactoDataTableStateManager } from './data-table-state-manager';
 import { TableColumnDirective } from './table-column.directive';
-
-export interface PactoDataTableState<T> {
-  pageSize: number;
-  totalPages: number;
-  currentPage: number;
-  orderBy?: string;
-  orderDirection?: 'ASC' | 'DESC';
-  data: T[];
-}
-
-export interface PactoDataTableFilter {
-  pageSize: number;
-  currentPage: number;
-  orderBy?: string;
-  orderDirection?: 'ASC' | 'DESC';
-}
 
 @Directive({
   selector: 'table[uiDataTable]',
-  exportAs: 'uiDataTable'
+  exportAs: 'uiDataTable',
+  providers: [ PactoDataTableStateManager ]
 })
 export class DataTableDirective<T> implements OnInit, AfterViewInit {
-  @Output() filterUpdate: EventEmitter<PactoDataTableFilter> = new EventEmitter();
+  @Output() filterUpdate: EventEmitter<PactoDataTableFilter>;
   @ContentChildren(TableColumnDirective) columns: QueryList<TableColumnDirective>;
 
   private thead;
@@ -31,27 +16,21 @@ export class DataTableDirective<T> implements OnInit, AfterViewInit {
   private headerRow;
   private bodyRows: HTMLElement[] = [];
 
-  private dataTableState$: BehaviorSubject<PactoDataTableState<T>> = new BehaviorSubject({
-    totalPages: 0,
-    currentPage: 0,
-    pageSize: 0,
-    data: [],
-    orderBy: null,
-    orderDirection: null
-  });
-
   constructor(
     private renderer: Renderer2,
     private tableElement: ElementRef,
+    @Self() public stateManager: PactoDataTableStateManager<T>,
     private tableViewContainerRef: ViewContainerRef
-  ) {}
+  ) {
+    this.filterUpdate = this.stateManager.filterUpdate$;
+  }
 
   ngOnInit() {}
   
   ngAfterViewInit() {
     this.renderTable();
 
-    this.dataTableState$.subscribe(() => {
+    this.stateManager.state$.subscribe(() => {
       this.renderTable();
     });
 
@@ -60,17 +39,8 @@ export class DataTableDirective<T> implements OnInit, AfterViewInit {
     });
   }
 
-  private getCurrentFilter(): PactoDataTableFilter {
-    const { 
-      totalPages,
-      data,
-      ...filter 
-    } = this.dataTableState$.value;
-    return filter;
-  }
-
-  get state() { 
-    return this.dataTableState$.value;
+  get state() {
+    return this.stateManager.state$.value;
   }
 
   get data() {
@@ -85,41 +55,6 @@ export class DataTableDirective<T> implements OnInit, AfterViewInit {
     return this.state.pageSize;
   }
 
-  patchState(state: Partial<PactoDataTableState<T>>) {
-    const current = this.dataTableState$.value;
-    this.dataTableState$.next({
-      ...current,
-      ...state
-    });
-  }
-
-  setCurrentPage(currentPage: number) {
-    const currentFilter = this.getCurrentFilter();
-    this.filterUpdate.emit({
-      ...currentFilter,
-      currentPage
-    })
-  }
-
-  setPageSize(pageSize: number) {
-    const currentFilter = this.getCurrentFilter();
-    this.filterUpdate.emit({
-      ...currentFilter,
-      pageSize,
-      currentPage: 1
-    });
-  }
-
-  setOrderState(orderBy: string, orderDirection: 'ASC' | 'DESC') {
-    const currentFilter = this.getCurrentFilter();
-    this.filterUpdate.emit({
-      ...currentFilter,
-      orderBy,
-      orderDirection,
-      currentPage: 1
-    });
-  }
-
   private renderTable() {
 
     this.tableViewContainerRef.clear();
@@ -128,44 +63,37 @@ export class DataTableDirective<T> implements OnInit, AfterViewInit {
     });
 
     this.renderTableHeader(this.columns.toArray());
-    this.renderTableBody(this.dataTableState$.value.data);
+    this.renderTableBody(this.state.data);
   }
 
   private renderTableHeader(columns: TableColumnDirective[]) {
-    const headerCells = columns.map(column => {
-      const headerCellTemplate = column.headerCell.template;
-      return this.tableViewContainerRef.createEmbeddedView(headerCellTemplate);
-    });
-    const tableHead = this.buildHeaderContainer(headerCells);
-    this.injectTableHeader(tableHead);
-  }
-
-  private buildHeaderContainer(headerCells: EmbeddedViewRef<any>[]) {
+    const headerCells = this.buildHeaderRowCells(columns);
 
     if (!this.thead) {
       this.thead = this.renderer.createElement('thead');
     }
-
     if (!this.headerRow) {
       this.headerRow = this.renderer.createElement('tr');
     }
 
     this.thead.insertBefore(this.headerRow, this.thead.lastChild);
-
     headerCells.reverse().forEach(headerCell => {
-      const headerCellRoot = headerCell.rootNodes[0];
-      this.headerRow.insertBefore(headerCellRoot, this.headerRow.firstChild);
+      this.headerRow.insertBefore(headerCell, this.headerRow.firstChild);
     });
 
-    return this.thead;
-  }
-  
-  private injectTableHeader(thead) {
-    const tableElementRef = this.tableElement.nativeElement;
-    tableElementRef.insertBefore(
-      thead,
-      tableElementRef.firstChild
+    const tableRef = this.tableElement.nativeElement;
+    tableRef.insertBefore(
+      this.thead,
+      tableRef.firstChild
     )
+  }
+
+  private buildHeaderRowCells(columns: TableColumnDirective[]): HTMLElement[] {
+    return columns.map(column => {
+      const headerCellTemplate = column.headerCell.template;
+      const embeddedViewRef = this.tableViewContainerRef.createEmbeddedView(headerCellTemplate);
+      return embeddedViewRef.rootNodes[0];
+    });
   }
 
   private renderTableBody(data: any[]) {
@@ -214,5 +142,4 @@ export class DataTableDirective<T> implements OnInit, AfterViewInit {
     return this.tbody;
   }
 
-  private injectTableBody() {}
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { DataTableDirective, PactoDataTableFilter } from '../data-table.directive';
+import { PactoDataTableFilter } from '../data-table-state-manager';
+import { DataTableDirective } from '../data-table.directive';
 import { Filter, MockService, Person } from '../mock.service';
 
 @Component({
@@ -31,7 +32,7 @@ export class DataTableComponent implements OnInit {
 
   private updateTableData(filter) {
     this.mockService.getPeople(filter).subscribe(result => {
-      this.dataTable.patchState(result);
+      this.dataTable.stateManager.patchState(result);
     });
   }
 
