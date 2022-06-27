@@ -1,5 +1,6 @@
 import { EventEmitter, Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
+import { TableColumnDirective } from "./table-column.directive";
 
 export interface PactoDataTableState<T> {
     pageSize: number;
@@ -8,6 +9,7 @@ export interface PactoDataTableState<T> {
     orderBy?: string;
     orderDirection?: 'ASC' | 'DESC';
     data: T[];
+    columnVisibility: { [columnId: string]: boolean };
 }
 
 export interface PactoDataTableFilter {
@@ -18,17 +20,18 @@ export interface PactoDataTableFilter {
 }
 
 export class PactoDataTableStateManager<T> {
-
     filterUpdate$: EventEmitter<PactoDataTableFilter> = new EventEmitter();
-
     state$: BehaviorSubject<PactoDataTableState<T>> = new BehaviorSubject({
-        totalPages: 0,
-        currentPage: 0,
-        pageSize: 0,
+        pageSize: 10,
+        currentPage: 1,
         data: [],
+        totalPages: null,
         orderBy: null,
-        orderDirection: null
+        orderDirection: null,
+        columnVisibility: {}
     });
+
+    constructor() {}
 
     private get state() {
         return this.state$.value;
@@ -75,9 +78,17 @@ export class PactoDataTableStateManager<T> {
           orderDirection,
           currentPage: 1
         });
-      }
-    
+    }
 
-
+    initializeColumnConfig(columns: TableColumnDirective[]) {
+        const columnVisibility = {};
+        columns.forEach(column => {
+            const initialVisibility = column.columnInitiallyVisible;
+            columnVisibility[column.uiTableColumn] = initialVisibility;
+        });
+        this.patchState({
+          columnVisibility
+        });
+    }
 
 }

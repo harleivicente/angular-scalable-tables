@@ -1,12 +1,14 @@
 
+<button (click)="showAllColumns()"> Show All </button>
 
 <table uiDataTable (filterUpdate)="filterUpdate($event)" #table=uiDataTable>
 
-    <ng-container uiTableColumn="nome">
+    <ng-container uiTableColumn="nome" [columnInitiallyVisible]="false">
         <th *uiTableHeaderCell> Nome </th>
-        <th (click)="clicked(item)" *uiTableCell="let item;"> {{ item?.nome }} </th>
+        <th *uiTableCell="let item;"> {{ 1 }} </th>
     </ng-container>
-    <ng-container uiTableColumn="idade">
+
+    <ng-container uiTableColumn="idade" [columnInitiallyVisible]="false">
         <th *uiTableHeaderCell> Idade </th>
         <th class="image" *uiTableCell="let item;"> 
             <p> Idade </p>
@@ -16,6 +18,7 @@
             <img src="https://gravatar.com/avatar/d1e3384d174406494db0f3a00995d88c?s=400&d=robohash&r=x">
         </th>
     </ng-container>
+
     <ng-container uiTableColumn="cpf">
         <th *uiTableHeaderCell> CPF </th>
         <th *uiTableCell="let item;"> {{ item?.cpf }} </th>
@@ -28,15 +31,18 @@
     
 </table>
 
+    <div>
+        {{ table.state.columnVisibility | json }}
+    </div>
 
     <div>
         <h4> Select Page </h4>
         <button
-            [ngClass]="{ current: table.currentPage === 1 }" 
+            [ngClass]="{ current: table.state?.currentPage === 1 }" 
             (click)="table.stateManager.setCurrentPage(1)"> 1 
         </button>
         <button
-            [ngClass]="{ current: table.currentPage === 2 }" 
+            [ngClass]="{ current: table.state?.currentPage === 2 }" 
             (click)="table.stateManager.setCurrentPage(2)"> 2 
         </button>
     </div>
@@ -44,11 +50,11 @@
     <div>
         <h4> Page Size </h4>
         <button
-            [ngClass]="{ current: table.pageSize === 10 }" 
+            [ngClass]="{ current: table.state?.pageSize === 10 }" 
             (click)="table.stateManager.setPageSize(10)"> 10
         </button>
         <button
-            [ngClass]="{ current: table.pageSize === 20 }" 
+            [ngClass]="{ current: table.state?.pageSize === 20 }" 
             (click)="table.stateManager.setPageSize(20)"> 20
         </button>
     </div>

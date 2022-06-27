@@ -9,9 +9,11 @@ import { Filter, MockService, Person } from '../mock.service';
   styleUrls: ['./data-table.component.scss']
 })
 export class DataTableComponent implements OnInit {
-  @ViewChild(DataTableDirective, { static: true }) dataTable: DataTableDirective<Person>;
+  @ViewChild(DataTableDirective, { static: false }) dataTable: DataTableDirective<Person>;
 
   constructor(private mockService: MockService) {}
+
+  show = false;
 
   ngOnInit() {
     const initialFilter: Filter = {
@@ -21,9 +23,14 @@ export class DataTableComponent implements OnInit {
     this.updateTableData(initialFilter);
   }
 
-  clicked(a) {
-    console.log(a);
-    
+  showAllColumns() {
+    this.dataTable.stateManager.patchState({
+      columnVisibility: {
+        'nome': true,
+        'idade': true,
+        'cpf': true
+      }
+    })
   }
 
   filterUpdate(filter: PactoDataTableFilter) {

@@ -7,6 +7,7 @@ import { TableHeaderCellDirective } from './table-header-cell.directive';
 })
 export class TableColumnDirective {
   @Input() uiTableColumn: string;
+  @Input() columnInitiallyVisible = true;
   @ContentChild(TableHeaderCellDirective, { static: false }) headerCell: TableHeaderCellDirective;
   @ContentChild(TableCellDirective, { static: false }) cell: TableCellDirective;
 

@@ -1,5 +1,5 @@
-import { AfterViewInit, ContentChildren, Directive, ElementRef, EmbeddedViewRef, EventEmitter, OnInit, Output, QueryList, Renderer2, Self, ViewContainerRef } from '@angular/core';
-import { PactoDataTableFilter, PactoDataTableStateManager } from './data-table-state-manager';
+import { AfterContentInit, AfterViewInit, ContentChildren, Directive, ElementRef, EmbeddedViewRef, EventEmitter, OnInit, Output, QueryList, Renderer2, Self, ViewContainerRef } from '@angular/core';
+import { PactoDataTableFilter, PactoDataTableState, PactoDataTableStateManager } from './data-table-state-manager';
 import { TableColumnDirective } from './table-column.directive';
 
 @Directive({
@@ -7,7 +7,7 @@ import { TableColumnDirective } from './table-column.directive';
   exportAs: 'uiDataTable',
   providers: [ PactoDataTableStateManager ]
 })
-export class DataTableDirective<T> implements OnInit, AfterViewInit {
+export class DataTableDirective<T> implements OnInit, AfterContentInit {
   @Output() filterUpdate: EventEmitter<PactoDataTableFilter>;
   @ContentChildren(TableColumnDirective) columns: QueryList<TableColumnDirective>;
 
@@ -22,20 +22,17 @@ export class DataTableDirective<T> implements OnInit, AfterViewInit {
     @Self() public stateManager: PactoDataTableStateManager<T>,
     private tableViewContainerRef: ViewContainerRef
   ) {
+
     this.filterUpdate = this.stateManager.filterUpdate$;
   }
 
   ngOnInit() {}
   
-  ngAfterViewInit() {
+  ngAfterContentInit() {
+    this.stateManager.initializeColumnConfig(this.columns.toArray());
     this.renderTable();
-
     this.stateManager.state$.subscribe(() => {
-      this.renderTable();
-    });
-
-    this.columns.changes.subscribe(() => {
-      this.renderTable();
+        this.renderTable();
     });
   }
 
@@ -44,26 +41,23 @@ export class DataTableDirective<T> implements OnInit, AfterViewInit {
   }
 
   get data() {
-    return this.state.data;
+      return this.state.data;
   }
 
-  get currentPage() {
-    return this.state.currentPage;
-  }
-
-  get pageSize() {
-    return this.state.pageSize;
+  private get visibleColumns(): TableColumnDirective[] {
+    return this.columns.filter(column => {
+      const columnId = column.uiTableColumn;
+      return this.state.columnVisibility[columnId];
+    });
   }
 
   private renderTable() {
-
-    this.tableViewContainerRef.clear();
-    this.bodyRows.forEach(row => {
-      row.remove();
-    });
-
-    this.renderTableHeader(this.columns.toArray());
-    this.renderTableBody(this.state.data);
+      this.tableViewContainerRef.clear();
+      this.bodyRows.forEach(row => {
+        row.remove();
+      });
+      this.renderTableHeader(this.visibleColumns);
+      this.renderTableBody(this.state.data);
   }
 
   private renderTableHeader(columns: TableColumnDirective[]) {
@@ -106,7 +100,7 @@ export class DataTableDirective<T> implements OnInit, AfterViewInit {
   }
 
   private buildRowCells(data: any): HTMLElement[] {
-    const templates = this.columns.map(column => column.cell.template);
+    const templates = this.visibleColumns.map(column => column.cell.template);
     const viewContainerRef = this.tableViewContainerRef;
     return templates.map(template => {
       const embeddedViewRef = viewContainerRef.createEmbeddedView(template, {
