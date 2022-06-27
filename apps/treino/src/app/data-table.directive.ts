@@ -29,9 +29,7 @@ export class DataTableDirective<T> implements OnInit, AfterContentInit {
     this.filterUpdate = this.stateManager.filterUpdate$;
   }
 
-  ngOnInit() {
-    console.log(this.loading);
-  }
+  ngOnInit() {}
   
   ngAfterContentInit() {
     this.stateManager.initializeColumnConfig(this.columns.toArray());
@@ -116,8 +114,27 @@ export class DataTableDirective<T> implements OnInit, AfterContentInit {
   private buildHeaderRowCells(columns: TableColumnDirective[]): HTMLElement[] {
     return columns.map(column => {
       const headerCellTemplate = column.headerCell.template;
-      const embeddedViewRef = this.tableViewContainerRef.createEmbeddedView(headerCellTemplate);
+      const columnId = column.uiTableColumn;
+      const sortDirection = this.getSortDirection(columnId);
+      const embeddedViewRef = this.tableViewContainerRef.createEmbeddedView(headerCellTemplate, {
+        sortDirection,
+        toggleSort: () => {
+          return this.toggleSort(columnId);
+        }
+      });
       return embeddedViewRef.rootNodes[0];
+    });
+  }
+
+  private getSortDirection(columnId: string) {
+    return this.state.orderBy === columnId ? this.state.orderDirection : null;
+  }
+
+  private toggleSort(columnId: string) {
+    const sortDirection = this.getSortDirection(columnId);
+    this.stateManager.patchState({
+      orderBy: columnId,
+      orderDirection: sortDirection === 'ASC' ? 'DESC' : 'ASC'
     });
   }
 

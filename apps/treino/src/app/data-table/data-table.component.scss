@@ -7,22 +7,20 @@ table {
     margin: 0px;
     width: calc(100% - 30px);
     margin: 15px;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     background-color: beige;
-    padding: 0px;
     border-spacing: 0px;
 
     th {
-        padding: 10px;
+        padding: 15px;
+    }
+
+    .order-control {
+        cursor: pointer;
     }
 
     tbody tr {
-        cursor: pointer;
-        padding: 0px;
-        margin: 0px;
-        
         &:hover {
-            background-color: aquamarine;
+            background-color: lightyellow;
         }
     }
 }

@@ -27,8 +27,8 @@ export class PactoDataTableStateManager<T> {
         currentPage: 1,
         data: [],
         totalPages: null,
-        orderBy: null,
-        orderDirection: null,
+        orderBy: 'nome',
+        orderDirection: 'ASC',
         loading: false,
         columnVisibility: {}
     });

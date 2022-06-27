@@ -1,9 +1,15 @@
 
-
 <table uiDataTable (filterUpdate)="filterUpdate($event)" #table=uiDataTable>
 
     <ng-container uiTableColumn="nome">
-        <th *uiTableHeaderCell> Nome </th>
+        <th *uiTableHeaderCell="let sort = sortDirection; let toggleSort = toggleSort;">
+            Nome
+            <span (click)="toggleSort()" class="order-control">
+                <i *ngIf="sort === 'ASC'" class="bi bi-chevron-up"></i>
+                <i *ngIf="sort === 'DESC'" class="bi bi-chevron-down"></i>
+                <i *ngIf="sort === null" class="bi bi-chevron-expand"></i>
+            </span>
+        </th>
         <th *uiTableCell="let item;"> {{ 1 }} </th>
     </ng-container>
 

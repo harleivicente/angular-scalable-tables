@@ -8,7 +8,7 @@ import { Filter, MockService, Person } from '../mock.service';
   templateUrl: './data-table.component.html',
   styleUrls: ['./data-table.component.scss']
 })
-export class DataTableComponent implements OnInit, AfterContentInit {
+export class DataTableComponent implements OnInit {
   @ViewChild(DataTableDirective, { static: true }) dataTable: DataTableDirective<Person>;
 
   constructor(private mockService: MockService) {}
