@@ -5,15 +5,15 @@ button.current  {
 
 table {
     margin: 0px;
-    margin-top: 100px;
-    width: 100%;
+    width: calc(100% - 30px);
+    margin: 15px;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     background-color: beige;
     padding: 0px;
     border-spacing: 0px;
 
     th {
-        padding: 0px;
+        padding: 10px;
     }
 
     tr {
@@ -22,11 +22,3 @@ table {
     }
 }
 
-th.image {
-    background-color: white;
-    border: 1px solid bisque;
-
-    img {
-        width: 30px;
-    }
-}

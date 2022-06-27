@@ -32,7 +32,7 @@ export class MockService {
   constructor() {}
 
   getPeople(filter: Filter): Observable<Result<Person>> {
-    const delay = Math.trunc(Math.random() * 0);
+    const delay = 300;
     return new Observable(observer => {
       setTimeout(() => {
         const result = {

@@ -1,35 +1,29 @@
 
-<button (click)="showAllColumns()"> Show All </button>
 
 <table uiDataTable (filterUpdate)="filterUpdate($event)" #table=uiDataTable>
 
-    <ng-container uiTableColumn="nome" [columnInitiallyVisible]="false">
+    <ng-container uiTableColumn="nome">
         <th *uiTableHeaderCell> Nome </th>
         <th *uiTableCell="let item;"> {{ 1 }} </th>
     </ng-container>
 
-    <ng-container uiTableColumn="idade" [columnInitiallyVisible]="false">
+    <ng-container uiTableColumn="idade">
         <th *uiTableHeaderCell> Idade </th>
         <th class="image" *uiTableCell="let item;"> 
-            <p> Idade </p>
-            <p>
-                {{ item?.idade }} 
-            </p>
-            <img src="https://gravatar.com/avatar/d1e3384d174406494db0f3a00995d88c?s=400&d=robohash&r=x">
+            {{ item?.idade }}
         </th>
     </ng-container>
 
-    <ng-container uiTableColumn="cpf">
+    <ng-container uiTableColumn="cpf" [columnInitiallyVisible]="false">
         <th *uiTableHeaderCell> CPF </th>
         <th *uiTableCell="let item;"> {{ item?.cpf }} </th>
     </ng-container>
 
-    <div *uiTableLoading> Carregando dados </div>
-    
-    <div *uiTableError> Erro ao carregar </div>
-
+    <!-- <div *uiTableLoading> Carregando dados </div> -->
     
 </table>
+
+    <button (click)="showAllColumns()"> Show All </button>
 
     <div>
         {{ table.state.columnVisibility | json }}

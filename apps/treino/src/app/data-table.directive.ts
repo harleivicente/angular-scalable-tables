@@ -1,6 +1,7 @@
-import { AfterContentInit, AfterViewInit, ContentChildren, Directive, ElementRef, EmbeddedViewRef, EventEmitter, OnInit, Output, QueryList, Renderer2, Self, ViewContainerRef } from '@angular/core';
+import { AfterContentInit, AfterViewInit, ContentChild, ContentChildren, Directive, ElementRef, EmbeddedViewRef, EventEmitter, OnInit, Output, QueryList, Renderer2, Self, ViewContainerRef } from '@angular/core';
 import { PactoDataTableFilter, PactoDataTableState, PactoDataTableStateManager } from './data-table-state-manager';
 import { TableColumnDirective } from './table-column.directive';
+import { TableLoadingDirective } from './table-loading.directive';
 
 @Directive({
   selector: 'table[uiDataTable]',
@@ -10,6 +11,7 @@ import { TableColumnDirective } from './table-column.directive';
 export class DataTableDirective<T> implements OnInit, AfterContentInit {
   @Output() filterUpdate: EventEmitter<PactoDataTableFilter>;
   @ContentChildren(TableColumnDirective) columns: QueryList<TableColumnDirective>;
+  @ContentChild(TableLoadingDirective, { static: true }) loading: TableLoadingDirective;
 
   private thead;
   private tbody;
@@ -26,7 +28,9 @@ export class DataTableDirective<T> implements OnInit, AfterContentInit {
     this.filterUpdate = this.stateManager.filterUpdate$;
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.loading);
+  }
   
   ngAfterContentInit() {
     this.stateManager.initializeColumnConfig(this.columns.toArray());
@@ -52,12 +56,21 @@ export class DataTableDirective<T> implements OnInit, AfterContentInit {
   }
 
   private renderTable() {
-      this.tableViewContainerRef.clear();
-      this.bodyRows.forEach(row => {
-        row.remove();
-      });
+    this.clearState();
+
+    if (this.state.loading) {
+      this.renderLoading();
+    } else {
       this.renderTableHeader(this.visibleColumns);
       this.renderTableBody(this.state.data);
+    }
+  }
+  
+  private clearState() {
+    this.tableViewContainerRef.clear();
+    this.bodyRows.forEach(row => {
+      row.remove();
+    });
   }
 
   private renderTableHeader(columns: TableColumnDirective[]) {
@@ -82,14 +95,6 @@ export class DataTableDirective<T> implements OnInit, AfterContentInit {
     )
   }
 
-  private buildHeaderRowCells(columns: TableColumnDirective[]): HTMLElement[] {
-    return columns.map(column => {
-      const headerCellTemplate = column.headerCell.template;
-      const embeddedViewRef = this.tableViewContainerRef.createEmbeddedView(headerCellTemplate);
-      return embeddedViewRef.rootNodes[0];
-    });
-  }
-
   private renderTableBody(data: any[]) {
     const tableBody = this.buildTableBody(data);
     const tableRef = this.tableElement.nativeElement;
@@ -97,6 +102,25 @@ export class DataTableDirective<T> implements OnInit, AfterContentInit {
       tableBody,
       tableRef.lastChild
     );
+  }
+
+  private renderLoading() {
+    if (!this.loading) return;
+    const loadingTemplate = this.loading.templateRef;
+    const embbededView = this.tableViewContainerRef.createEmbeddedView(loadingTemplate);
+    
+    this.tableElement.nativeElement.insertBefore(
+      embbededView.rootNodes[0],
+      this.tableElement.nativeElement.lastChild
+    );
+  }
+
+  private buildHeaderRowCells(columns: TableColumnDirective[]): HTMLElement[] {
+    return columns.map(column => {
+      const headerCellTemplate = column.headerCell.template;
+      const embeddedViewRef = this.tableViewContainerRef.createEmbeddedView(headerCellTemplate);
+      return embeddedViewRef.rootNodes[0];
+    });
   }
 
   private buildRowCells(data: any): HTMLElement[] {

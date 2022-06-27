@@ -9,6 +9,7 @@ export interface PactoDataTableState<T> {
     orderBy?: string;
     orderDirection?: 'ASC' | 'DESC';
     data: T[];
+    loading: boolean;
     columnVisibility: { [columnId: string]: boolean };
 }
 
@@ -28,6 +29,7 @@ export class PactoDataTableStateManager<T> {
         totalPages: null,
         orderBy: null,
         orderDirection: null,
+        loading: false,
         columnVisibility: {}
     });
 
