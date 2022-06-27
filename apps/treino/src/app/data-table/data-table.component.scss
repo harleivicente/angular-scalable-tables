@@ -16,9 +16,14 @@ table {
         padding: 10px;
     }
 
-    tr {
+    tbody tr {
+        cursor: pointer;
         padding: 0px;
         margin: 0px;
+        
+        &:hover {
+            background-color: aquamarine;
+        }
     }
 }
 

@@ -22,6 +22,10 @@ export class DataTableComponent implements OnInit, AfterContentInit {
     };
     this.updateTableData(initialFilter);
   }
+
+  rowClick(event: MouseEvent) {
+    console.log(event.currentTarget);
+  }
   
   showAllColumns() {
     this.dataTable.stateManager.patchState({

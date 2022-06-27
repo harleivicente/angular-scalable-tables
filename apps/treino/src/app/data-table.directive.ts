@@ -1,7 +1,8 @@
-import { AfterContentInit, AfterViewInit, ContentChild, ContentChildren, Directive, ElementRef, EmbeddedViewRef, EventEmitter, OnInit, Output, QueryList, Renderer2, Self, ViewContainerRef } from '@angular/core';
-import { PactoDataTableFilter, PactoDataTableState, PactoDataTableStateManager } from './data-table-state-manager';
+import { AfterContentInit, ContentChild, ContentChildren, Directive, ElementRef, EventEmitter, OnInit, Output, QueryList, Renderer2, Self, ViewContainerRef } from '@angular/core';
+import { PactoDataTableFilter, PactoDataTableStateManager } from './data-table-state-manager';
 import { TableColumnDirective } from './table-column.directive';
 import { TableLoadingDirective } from './table-loading.directive';
+import { TableRowDirective } from './table-row.directive';
 
 @Directive({
   selector: 'table[uiDataTable]',
@@ -12,11 +13,11 @@ export class DataTableDirective<T> implements OnInit, AfterContentInit {
   @Output() filterUpdate: EventEmitter<PactoDataTableFilter>;
   @ContentChildren(TableColumnDirective) columns: QueryList<TableColumnDirective>;
   @ContentChild(TableLoadingDirective, { static: true }) loading: TableLoadingDirective;
+  @ContentChild(TableRowDirective, { static: true }) row: TableRowDirective;
 
   private thead;
   private tbody;
   private headerRow;
-  private bodyRows: HTMLElement[] = [];
 
   constructor(
     private renderer: Renderer2,
@@ -68,9 +69,6 @@ export class DataTableDirective<T> implements OnInit, AfterContentInit {
   
   private clearState() {
     this.tableViewContainerRef.clear();
-    this.bodyRows.forEach(row => {
-      row.remove();
-    });
   }
 
   private renderTableHeader(columns: TableColumnDirective[]) {
@@ -134,15 +132,18 @@ export class DataTableDirective<T> implements OnInit, AfterContentInit {
     });
   }
 
-  private buildRow(dataItem: any) {
+  private buildRow(dataItem: any): HTMLElement {
     const rowCells = this.buildRowCells(dataItem);
-    const tr = this.renderer.createElement('tr');
-    this.bodyRows.push(tr);
+
+    const rowTemplate = this.row.templateRef;
+    const rowEmbeddedView = this.tableViewContainerRef.createEmbeddedView(rowTemplate);
+    const rowNativeRef = rowEmbeddedView.rootNodes[0];
 
     rowCells.reverse().forEach(rowCell => {
-      tr.insertBefore(rowCell, tr.firstChild);
+      rowNativeRef.insertBefore(rowCell, rowNativeRef.lastChild);
     });
-    return tr;
+
+    return rowNativeRef;
   }
 
   private buildTableBody(data: any[]) {

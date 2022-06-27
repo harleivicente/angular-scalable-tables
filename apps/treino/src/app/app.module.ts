@@ -16,6 +16,7 @@ import { TableHeaderCellDirective } from './table-header-cell.directive';
 import { TableColumnDirective } from './table-column.directive';
 import { TableCellDirective } from './table-cell.directive';
 import { TableLoadingDirective } from './table-loading.directive';
+import { TableRowDirective } from './table-row.directive';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { TableLoadingDirective } from './table-loading.directive';
     TableHeaderCellDirective,
     TableColumnDirective,
     TableCellDirective,
-    TableLoadingDirective
+    TableLoadingDirective,
+    TableRowDirective
   ],
   imports: [
     CommonModule,
