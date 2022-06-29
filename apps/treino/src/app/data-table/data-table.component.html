@@ -34,33 +34,3 @@
     <tr *uiTableRow></tr>
     
 </table>
-
-    <button (click)="showAllColumns()"> Show All </button>
-
-    <div>
-        {{ table.state.columnVisibility | json }}
-    </div>
-
-    <div>
-        <h4> Select Page </h4>
-        <button
-            [ngClass]="{ current: table.state?.currentPage === 1 }" 
-            (click)="table.stateManager.setCurrentPage(1)"> 1 
-        </button>
-        <button
-            [ngClass]="{ current: table.state?.currentPage === 2 }" 
-            (click)="table.stateManager.setCurrentPage(2)"> 2 
-        </button>
-    </div>
-
-    <div>
-        <h4> Page Size </h4>
-        <button
-            [ngClass]="{ current: table.state?.pageSize === 10 }" 
-            (click)="table.stateManager.setPageSize(10)"> 10
-        </button>
-        <button
-            [ngClass]="{ current: table.state?.pageSize === 20 }" 
-            (click)="table.stateManager.setPageSize(20)"> 20
-        </button>
-    </div>

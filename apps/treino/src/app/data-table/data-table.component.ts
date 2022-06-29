@@ -23,20 +23,6 @@ export class DataTableComponent implements OnInit {
     this.updateTableData(initialFilter);
   }
 
-  rowClick(event: MouseEvent) {
-    console.log(event.currentTarget);
-  }
-  
-  showAllColumns() {
-    this.dataTable.stateManager.patchState({
-      columnVisibility: {
-        'nome': true,
-        'idade': true,
-        'cpf': true
-      }
-    })
-  }
-
   filterUpdate(filter: PactoDataTableFilter) {
     this.updateTableData(filter);
   }
