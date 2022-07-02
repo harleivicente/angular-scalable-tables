@@ -6,13 +6,34 @@ ui-data-table {
 
 .header {
     margin: 15px 0px 30px;
+    display: flex;
+
+    .share { margin: 0px 15px; }
+
+    .spacer {
+        flex-grow: 1;
+    }
+}
+
+.filter-wrapper {
+    position: relative;
+
+    .filter-dropdown {
+        position: absolute;
+        display: none;
+        right: 0px;
+
+        &.visible {
+            display: block;
+        }
+    }
+
 }
 
 table {
     margin: 0px;
     width: calc(100%);
-    // margin: 15px;
-    background-color: #def8ff;
+    background-color: #fafeff;
     border-spacing: 0px;
     font-family: 'Courier New', Courier, monospace;
 
@@ -20,13 +41,9 @@ table {
         padding: 15px;
     }
     
-    .order-control {
-        cursor: pointer;
-    }
-    
     tbody tr {
         &:hover {
-            background-color: #ddf5fa;
+            background-color: #fff2f2;
         }
     }
 }

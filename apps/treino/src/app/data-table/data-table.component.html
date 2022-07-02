@@ -4,7 +4,17 @@
 
     <input type="text" placeholder="Filtrar por Nome" [formControl]="filterInputFc" />
 
-    <button (click)="share.emit()"> Share </button>
+    <button class="share" (click)="share.emit()"> Share </button>
+
+    <div class="spacer"></div>
+
+    <div class="filter-wrapper">
+        <button (click)="toggleFilter()" class="filtros"> Filtros </button>
+        <div class="filter-dropdown" [ngClass]="{ visible: showFilter }">
+            <ng-container #filterOutlet></ng-container>
+        </div>
+    </div>
+    
 
 </div>
 
@@ -17,6 +27,4 @@
 >
 </table>
 
-<button (click)="show20()"> Show 20 items </button>
-<button (click)="stateManager.showAllColumns()"> Show All Column </button>
 

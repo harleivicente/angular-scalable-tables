@@ -1,18 +1,21 @@
-import { AfterViewInit, Component, ContentChild, ContentChildren, EventEmitter, Input, OnChanges, OnInit, Output, QueryList, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ContentChild, ContentChildren, EventEmitter, Input, OnChanges, OnInit, Output, QueryList, SimpleChanges, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { PactoDataTableFilter, PactoDataTableResult, PactoDataTableState, PactoDataTableStateManager } from '../data-table-state-manager';
 import { TableColumnDirective } from '../table-column.directive';
 import { TableLoadingDirective } from '../table-loading.directive';
 import { TableRowDirective } from '../table-row.directive';
 import { debounceTime } from 'rxjs/operators';
+import { DataTableFilterDirective } from '../data-table-filter.directive';
 
 
 export interface TreinoTableFilter extends PactoDataTableFilter {
   textFilter?: string;
+  filter?: any;
 }
 
 @Component({
   selector: 'ui-data-table',
+  exportAs: 'dataTable',
   templateUrl: './data-table.component.html',
   styleUrls: ['./data-table.component.scss'],
   providers: [PactoDataTableStateManager],
@@ -22,7 +25,10 @@ export class DataTableComponent<T> implements OnInit, OnChanges {
   @ContentChildren(TableColumnDirective) columns: QueryList<TableColumnDirective>;
   @ContentChild(TableLoadingDirective, { static: true }) loadingTemplate: TableLoadingDirective;
   @ContentChild(TableRowDirective, { static: true }) rowTemplate: TableRowDirective;
-  
+  @ContentChild(DataTableFilterDirective, { static: true }) filterTemplate: DataTableFilterDirective;
+
+  @ViewChild('filterOutlet', { read: ViewContainerRef, static: true }) filterOutlet: ViewContainerRef;
+
   @Input() loading: boolean;
   @Input() data: PactoDataTableResult<T>;
 
@@ -31,7 +37,9 @@ export class DataTableComponent<T> implements OnInit, OnChanges {
 
 
   filterInputFc: FormControl = new FormControl();
-  
+  filter: any = {};
+  showFilter = false;
+
 
   constructor(
     public stateManager: PactoDataTableStateManager<any>
@@ -42,7 +50,8 @@ export class DataTableComponent<T> implements OnInit, OnChanges {
     this.stateManager.update$.subscribe((filter: PactoDataTableFilter) => {
       this.filterUpdate.emit({
         ...filter,
-        textFilter: this.filterInputFc.value
+        textFilter: this.filterInputFc.value,
+        filter: this.filter
       });
     })
 
@@ -51,9 +60,13 @@ export class DataTableComponent<T> implements OnInit, OnChanges {
     ).subscribe(textFilter => {
       this.filterUpdate.emit({
         ...this.stateManager.getCurrentFilter(),
-        textFilter
+        textFilter,
+        filter: this.filter
       });
     });
+
+    const filterTemplate = this.filterTemplate.templateRef;
+    this.filterOutlet.createEmbeddedView(filterTemplate);
 
   }
 
@@ -76,8 +89,17 @@ export class DataTableComponent<T> implements OnInit, OnChanges {
     this.stateManager.patchState(state);
   }
 
-  show20() {
-    this.stateManager.triggerPageSizeChange(20);
+  toggleFilter() {
+    this.showFilter = !this.showFilter;
+  }
+
+  updateFilter(filter) {
+    this.filter = filter;
+    this.filterUpdate.emit({
+      ...this.stateManager.getCurrentFilter(),
+      textFilter: this.filterInputFc.value,
+      filter: filter
+    });
   }
 
 }

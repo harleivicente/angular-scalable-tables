@@ -18,6 +18,7 @@ import { TableCellDirective } from './table-cell.directive';
 import { TableLoadingDirective } from './table-loading.directive';
 import { TableRowDirective } from './table-row.directive';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DataTableFilterDirective } from './data-table-filter.directive';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     TableColumnDirective,
     TableCellDirective,
     TableLoadingDirective,
-    TableRowDirective
+    TableRowDirective,
+    DataTableFilterDirective
   ],
   imports: [
     CommonModule,

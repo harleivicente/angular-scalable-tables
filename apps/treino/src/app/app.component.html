@@ -21,7 +21,7 @@
         </td>
     </ng-container>
 
-    <ng-container uiTableColumn="cpf" [columnInitiallyVisible]="false">
+    <ng-container uiTableColumn="cpf">
         <th *uiTableHeaderCell> CPF </th>
         <td *uiTableCell="let item;"> {{ item?.cpf }} </td>
     </ng-container>
@@ -33,5 +33,13 @@
             <td> Loading... :D </td>
         </tr>
     </tbody>
+
+    <div *uiDataTableFilter>
+        <select [formControl]="tipoPessoaFc">
+            <option value="fisica"> Pessoa Física </option>
+            <option value="juridica"> Pessoa Jurídica </option>
+            <option value="ambos"> Ambos </option>
+        </select>
+    </div>
 
 </ui-data-table>

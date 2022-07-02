@@ -1,5 +1,6 @@
 import { CollectionViewer, DataSource } from '@angular/cdk/collections';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { PactoDataTableFilter, PactoDataTableResult } from './data-table-state-manager';
 import { DataTableComponent } from './data-table/data-table.component';
@@ -14,12 +15,17 @@ export class AppComponent implements OnInit {
   @ViewChild(DataTableComponent, { static: true }) table: DataTableComponent<any>;
   tableData: PactoDataTableResult<any>;
   tableLoading;
+  tipoPessoaFc = new FormControl();
 
   constructor(private mock: MockService) {}
 
   ngOnInit() {
     const initialFilter = { currentPage: 1, pageSize: 10 };
     this.updateTable(initialFilter);
+
+    this.tipoPessoaFc.valueChanges.subscribe(value => {
+      this.table.updateFilter({ tipoPessoa: value })
+    });
   }
 
   filterUpdate(filter: PactoDataTableFilter) {
