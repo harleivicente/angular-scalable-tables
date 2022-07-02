@@ -23,7 +23,12 @@ export class AppComponent implements OnInit {
   constructor(private mock: MockService) {}
 
   ngOnInit() {
-    const initialFilter = { currentPage: 1, pageSize: 10 };
+    const initialFilter: PactoDataTableFilter = { 
+      currentPage: 1,
+      pageSize: 10,
+      orderBy: 'nome',
+      orderDirection: 'ASC'
+    };
     this.updateTable(initialFilter);
 
     this.filterFormGroup.valueChanges.subscribe(filter => {

@@ -19,6 +19,7 @@ import { TableLoadingDirective } from './table-loading.directive';
 import { TableRowDirective } from './table-row.directive';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DataTableFilterDirective } from './data-table-filter.directive';
+import { TableSortControlDirective } from './table-sort-control.directive';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { DataTableFilterDirective } from './data-table-filter.directive';
     TableCellDirective,
     TableLoadingDirective,
     TableRowDirective,
-    DataTableFilterDirective
+    DataTableFilterDirective,
+    TableSortControlDirective
   ],
   imports: [
     CommonModule,

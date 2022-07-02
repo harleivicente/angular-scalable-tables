@@ -24,6 +24,18 @@
     [rowTemplate]="rowTemplate"
     [stateManager]="stateManager"
 >
+
+    <span 
+        *uiTableSortControl="let direction = direction; let triggerSortToggle = triggerSortToggle" class="sort-control"
+        (click)="triggerSortToggle()"
+    >
+        <i class="bi bi-chevron-expand" [ngClass]="{
+            'bi-chevron-expand': direction === null,
+            'bi-chevron-up': direction === 'ASC',
+            'bi-chevron-down': direction === 'DESC'
+        }"></i>
+    </span>
+
 </table>
 
 <div class="footer">
@@ -45,7 +57,6 @@
         </select>
 
     </form>
-
 
 </div>
 

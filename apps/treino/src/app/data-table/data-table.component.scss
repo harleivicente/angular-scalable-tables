@@ -44,7 +44,7 @@ table {
     font-family: 'Courier New', Courier, monospace;
 
     td, th {
-        padding: 15px;
+        padding: 10px;
     }
     
     tbody tr {
@@ -52,6 +52,10 @@ table {
             background-color: #fff2f2;
         }
     }
+}
+
+.sort-control {
+    cursor: pointer;
 }
 
 .footer {

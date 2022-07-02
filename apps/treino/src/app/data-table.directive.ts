@@ -3,6 +3,7 @@ import { PactoDataTableStateManager } from './data-table-state-manager';
 import { TableColumnDirective } from './table-column.directive';
 import { TableLoadingDirective } from './table-loading.directive';
 import { TableRowDirective } from './table-row.directive';
+import { TableSortControlDirective } from './table-sort-control.directive';
 
 @Directive({
   selector: 'table[uiDataTable]',
@@ -12,7 +13,8 @@ export class DataTableDirective<T> implements OnInit, AfterContentInit {
   @ContentChildren(TableColumnDirective) contentColumnTemplates: QueryList<TableColumnDirective>;
   @ContentChild(TableLoadingDirective, { static: true }) contentLoadingTemplate: TableLoadingDirective;
   @ContentChild(TableRowDirective, { static: true }) contentRowTemplate: TableRowDirective;
-  
+  @ContentChild(TableSortControlDirective, { static: true }) sortTemplate: TableSortControlDirective;
+
   @Input() stateManager: PactoDataTableStateManager<T>;
   /**
    * Colunas adicinais no formato TableColumnDirective
@@ -96,7 +98,7 @@ export class DataTableDirective<T> implements OnInit, AfterContentInit {
   }
 
   private renderTableHeader(columns: TableColumnDirective[]) {
-    const headerCells = this.buildHeaderRowCells(columns);
+    const headerCells = this.buildHeaderCells(columns);
 
     if (!this.thead) {
       this.thead = this.renderer.createElement('thead');
@@ -137,15 +139,38 @@ export class DataTableDirective<T> implements OnInit, AfterContentInit {
     );
   }
 
-  private buildHeaderRowCells(columns: TableColumnDirective[]): HTMLElement[] {
-    return columns.map(column => {
-      const headerCellTemplate = column.headerCell.template;
-      const embeddedViewRef = this.tableViewContainerRef.createEmbeddedView(headerCellTemplate);
-      return embeddedViewRef.rootNodes[0];
-    });
+  private buildHeaderCells(columns: TableColumnDirective[]): HTMLElement[] {
+    return columns.map(column => this.buildHeaderCell(column));
   }
 
-  private buildRowCells(data: any): HTMLElement[] {
+  private buildHeaderCell(column: TableColumnDirective): HTMLElement {
+    const headerCellTemplate = column.headerCell.template;
+    const viewContainer = this.tableViewContainerRef;
+
+    const cellEmbeddedViewRef = viewContainer.createEmbeddedView(headerCellTemplate);
+
+    const cellElement: HTMLElement = cellEmbeddedViewRef.rootNodes[0];
+    cellElement.insertBefore(
+      this.buildSortControl(column.uiTableColumn),
+      null
+    );
+
+    return cellEmbeddedViewRef.rootNodes[0];
+  }
+
+  private buildSortControl(columnId: string): HTMLElement {
+    const sortTemplate = this.sortTemplate.templateRef;
+    const viewContainer = this.tableViewContainerRef;
+    const sortEmbeddedViewRef = viewContainer.createEmbeddedView(sortTemplate, {
+      direction: this.stateManager.getSortDirection(columnId),
+      triggerSortToggle: () => {
+        this.stateManager.triggerSortToggle(columnId);
+      }
+    });
+    return sortEmbeddedViewRef.rootNodes[0];
+  }
+
+  private buildBodyCells(data: any): HTMLElement[] {
     const templates = this.visibleColumns.map(column => column.cell.template);
     const viewContainerRef = this.tableViewContainerRef;
     return templates.map(template => {
@@ -157,7 +182,7 @@ export class DataTableDirective<T> implements OnInit, AfterContentInit {
   }
 
   private buildRow(dataItem: any): HTMLElement {
-    const rowCells = this.buildRowCells(dataItem);
+    const rowCells = this.buildBodyCells(dataItem);
 
     const rowTemplate = this.activeRowTemplate.templateRef;
     const rowEmbeddedView = this.tableViewContainerRef.createEmbeddedView(rowTemplate);

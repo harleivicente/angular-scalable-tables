@@ -61,11 +61,12 @@ function makeRandomPerson(): Person {
   return {
     cpf: '124.234.423-45',
     id: random(),
-    idade: random(),
+    idade: random(50),
     nome: `Person #${random()}`
   }
 }
 
-function random() {
-  return Math.trunc(Math.random() * 10000);
+function random(max = 1000) {
+  const base = Math.trunc(Math.random() * 10000);
+  return base % max;
 }

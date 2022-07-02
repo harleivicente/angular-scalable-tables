@@ -52,7 +52,7 @@ export class PactoDataTableStateManager<T> {
         return this.state$.value;
     }
 
-    private getSortDirection(columnId: string) {
+    getSortDirection(columnId: string) {
         return this.state.orderBy === columnId ? this.state.orderDirection : null;
     }
 
@@ -105,7 +105,8 @@ export class PactoDataTableStateManager<T> {
         this.update$.emit({
             ...this.getCurrentFilter(),
             orderBy: columnId,
-            orderDirection: currentSortDirection === 'ASC' ? 'DESC' : 'ASC'
+            orderDirection: currentSortDirection === 'ASC' ? 'DESC' : 'ASC',
+            currentPage: 1
         });
     }
 
