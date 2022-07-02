@@ -12,6 +12,15 @@ export interface PactoDataTableState<T> {
     columnVisibility: { [columnId: string]: boolean };
 }
 
+export interface PactoDataTableResult<T> {
+    pageSize: number;
+    totalPages: number;
+    currentPage: number;
+    orderBy?: string;
+    orderDirection?: 'ASC' | 'DESC';
+    data: T[];
+}
+
 export interface PactoDataTableFilter {
     pageSize: number;
     currentPage: number;
@@ -25,14 +34,14 @@ export interface PactoTableConfig {
 }
 
 export class PactoDataTableStateManager<T> {
-    filterUpdate$: EventEmitter<PactoDataTableFilter> = new EventEmitter();
+    update$: EventEmitter<PactoDataTableFilter> = new EventEmitter();
     state$: BehaviorSubject<PactoDataTableState<T>> = new BehaviorSubject({
         pageSize: 10,
         currentPage: 1,
         data: [],
         totalPages: null,
-        orderBy: 'nome',
-        orderDirection: 'ASC',
+        orderBy: null,
+        orderDirection: null,
         loading: false,
         columnVisibility: {}
     });
@@ -59,25 +68,25 @@ export class PactoDataTableStateManager<T> {
         });
     }
 
-    setCurrentPage(currentPage: number) {
+    triggerPageNumberChange(currentPage: number) {
         const currentFilter = this.getCurrentFilter();
-        this.filterUpdate$.emit({
+        this.update$.emit({
           ...currentFilter,
           currentPage
         })
     }
 
-    setPageSize(pageSize: number) {
+    triggerPageSizeChange(pageSize: number) {
         const currentFilter = this.getCurrentFilter();
-        this.filterUpdate$.emit({
+        this.update$.emit({
           ...currentFilter,
           pageSize,
           currentPage: 1
         });
     }
 
-    setOrderState(orderBy: string, orderDirection: 'ASC' | 'DESC') {
-        this.filterUpdate$.emit({
+    triggerSortChange(orderBy: string, orderDirection: 'ASC' | 'DESC') {
+        this.update$.emit({
           ...this.getCurrentFilter(),
           orderBy,
           orderDirection,
@@ -85,16 +94,16 @@ export class PactoDataTableStateManager<T> {
         });
     }
 
-    toggleSort(columnId: string) {
-        const sortDirection = this.getSortDirection(columnId);
-        this.filterUpdate$.emit({
+    triggerSortToggle(columnId: string) {
+        const currentSortDirection = this.getSortDirection(columnId);
+        this.update$.emit({
             ...this.getCurrentFilter(),
             orderBy: columnId,
-            orderDirection: sortDirection === 'ASC' ? 'DESC' : 'ASC'
+            orderDirection: currentSortDirection === 'ASC' ? 'DESC' : 'ASC'
         });
     }
 
-    getSortDirection(columnId: string) {
+    private getSortDirection(columnId: string) {
         return this.state.orderBy === columnId ? this.state.orderDirection : null;
     }
 

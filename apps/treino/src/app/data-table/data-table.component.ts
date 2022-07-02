@@ -1,49 +1,53 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { PactoDataTableFilter, PactoDataTableStateManager } from '../data-table-state-manager';
-import { DataTableDirective } from '../data-table.directive';
-import { MockService, Person } from '../mock.service';
+import { AfterViewInit, Component, ContentChild, ContentChildren, EventEmitter, OnInit, Output, QueryList, ViewChild, ViewEncapsulation } from '@angular/core';
+import { PactoDataTableFilter, PactoDataTableResult, PactoDataTableStateManager } from '../data-table-state-manager';
+import { TableColumnDirective } from '../table-column.directive';
+import { TableLoadingDirective } from '../table-loading.directive';
+import { TableRowDirective } from '../table-row.directive';
 
 @Component({
   selector: 'ui-data-table',
   templateUrl: './data-table.component.html',
   styleUrls: ['./data-table.component.scss'],
-  providers: [PactoDataTableStateManager]
+  providers: [PactoDataTableStateManager],
+  encapsulation: ViewEncapsulation.None
 })
-export class DataTableComponent implements OnInit {
-  @ViewChild(DataTableDirective, { static: true }) dataTable: DataTableDirective<Person>;
+export class DataTableComponent<T> implements OnInit, AfterViewInit {
+  @ContentChildren(TableColumnDirective) columns: QueryList<TableColumnDirective>;
+  @ContentChild(TableLoadingDirective, { static: true }) loadingTemplate: TableLoadingDirective;
+  @ContentChild(TableRowDirective, { static: true }) rowTemplate: TableRowDirective;
+  @Output() filterUpdate: EventEmitter<PactoDataTableFilter> = new EventEmitter();
 
   constructor(
-    private mockService: MockService,
     public stateManager: PactoDataTableStateManager<any>
   ) {}
 
   ngOnInit() {
+    this.stateManager.update$.subscribe($event => {
+      this.filterUpdate.emit($event);
+    })
 
     this.stateManager.initializeColumnConfig([
       { id: "nome", initiallyVisible: true },
       { id: "idade", initiallyVisible: true },
       { id: "cpf", initiallyVisible: true }
     ]);
-
-    this.stateManager.filterUpdate$.subscribe((filter: PactoDataTableFilter) => {
-      this.updateTableData(filter);
-    });
-
-    this.updateTableData({ currentPage: 1, pageSize: 10 });
   }
 
-  getSort(columnId){
-      return this.stateManager.getSortDirection(columnId);
-  }
+  ngAfterViewInit() {}
 
-  private updateTableData(filter) {
+  setLoading() {
     this.stateManager.patchState({ loading: true });
-    this.mockService.getPeople(filter).subscribe(result => {
-      this.stateManager.patchState({
-        ...result,
-        loading: false
-      });
+  }
+
+  setTableState(result: PactoDataTableResult<T>) {
+    this.stateManager.patchState({
+      ...result,
+      loading: false
     });
+  }
+  
+  show20() {
+    this.stateManager.triggerPageSizeChange(20);
   }
 
 }

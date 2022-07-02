@@ -9,10 +9,17 @@ import { TableRowDirective } from './table-row.directive';
   exportAs: 'uiDataTable'
 })
 export class DataTableDirective<T> implements OnInit, AfterContentInit {
-  @ContentChildren(TableColumnDirective) columns: QueryList<TableColumnDirective>;
-  @ContentChild(TableLoadingDirective, { static: true }) loading: TableLoadingDirective;
-  @ContentChild(TableRowDirective, { static: true }) row: TableRowDirective;
+  @ContentChildren(TableColumnDirective) contentColumnTemplates: QueryList<TableColumnDirective>;
+  @ContentChild(TableLoadingDirective, { static: true }) contentLoadingTemplate: TableLoadingDirective;
+  @ContentChild(TableRowDirective, { static: true }) contentRowTemplate: TableRowDirective;
+  
   @Input() stateManager: PactoDataTableStateManager<T>;
+  /**
+   * Colunas adicinais no formato TableColumnDirective
+   */
+  @Input() columnTemplates: TableColumnDirective[] = [];
+  @Input() loadingTemplate: TableLoadingDirective;
+  @Input() rowTemplate: TableRowDirective;
 
   private thead;
   private tbody;
@@ -23,6 +30,21 @@ export class DataTableDirective<T> implements OnInit, AfterContentInit {
     private tableElement: ElementRef,
     private tableViewContainerRef: ViewContainerRef
   ) {}
+
+  get allColumns(): TableColumnDirective[] {
+    return [
+      ...this.contentColumnTemplates.toArray(),
+      ...this.columnTemplates
+    ];
+  }
+
+  get activeLoadingTemplate(): TableLoadingDirective {
+    return this.loadingTemplate || this.contentLoadingTemplate;
+  }
+
+  get activeRowTemplate(): TableRowDirective {
+    return this.rowTemplate || this.contentRowTemplate;
+  }
 
   ngOnInit() {}
   
@@ -44,7 +66,7 @@ export class DataTableDirective<T> implements OnInit, AfterContentInit {
   }
 
   private get visibleColumns(): TableColumnDirective[] {
-    return this.columns.filter(column => {
+    return this.allColumns.filter(column => {
       const columnId = column.uiTableColumn;
       return this.state.columnVisibility[columnId];
     });
@@ -97,8 +119,8 @@ export class DataTableDirective<T> implements OnInit, AfterContentInit {
   }
 
   private renderLoading() {
-    if (!this.loading) return;
-    const loadingTemplate = this.loading.templateRef;
+    if (!this.activeLoadingTemplate) return;
+    const loadingTemplate = this.activeLoadingTemplate.templateRef;
     const embbededView = this.tableViewContainerRef.createEmbeddedView(loadingTemplate);
     
     this.tableElement.nativeElement.insertBefore(
@@ -110,7 +132,6 @@ export class DataTableDirective<T> implements OnInit, AfterContentInit {
   private buildHeaderRowCells(columns: TableColumnDirective[]): HTMLElement[] {
     return columns.map(column => {
       const headerCellTemplate = column.headerCell.template;
-      const columnId = column.uiTableColumn;
       const embeddedViewRef = this.tableViewContainerRef.createEmbeddedView(headerCellTemplate);
       return embeddedViewRef.rootNodes[0];
     });
@@ -130,7 +151,7 @@ export class DataTableDirective<T> implements OnInit, AfterContentInit {
   private buildRow(dataItem: any): HTMLElement {
     const rowCells = this.buildRowCells(dataItem);
 
-    const rowTemplate = this.row.templateRef;
+    const rowTemplate = this.activeRowTemplate.templateRef;
     const rowEmbeddedView = this.tableViewContainerRef.createEmbeddedView(rowTemplate);
     const rowNativeRef = rowEmbeddedView.rootNodes[0];
 

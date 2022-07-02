@@ -2,4 +2,31 @@
 
 <ui-ui-squares></ui-ui-squares> -->
 
-<ui-data-table></ui-data-table>
+<ui-data-table (filterUpdate)="filterUpdate($event)">
+
+    <ng-container uiTableColumn="nome">
+        <th *uiTableHeaderCell> Nome </th>
+        <td *uiTableCell="let item;"> {{ item.nome }} </td>
+    </ng-container>
+
+    <ng-container uiTableColumn="idade">
+        <th *uiTableHeaderCell> Idade </th>
+        <td class="image" *uiTableCell="let item;"> 
+            {{ item?.idade }}
+        </td>
+    </ng-container>
+
+    <ng-container uiTableColumn="cpf" [columnInitiallyVisible]="false">
+        <th *uiTableHeaderCell> CPF </th>
+        <td *uiTableCell="let item;"> {{ item?.cpf }} </td>
+    </ng-container>
+
+    <tr *uiTableRow></tr>
+
+    <tbody *uiTableLoading>
+        <tr>
+            <td> Loading... :D </td>
+        </tr>
+    </tbody>
+
+</ui-data-table>

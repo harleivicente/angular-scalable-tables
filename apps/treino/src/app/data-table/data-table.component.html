@@ -1,37 +1,13 @@
 
-<table uiDataTable [stateManager]="stateManager">
-
-    <ng-container uiTableColumn="nome">
-        <th *uiTableHeaderCell>
-            Nome
-            <span (click)="stateManager.toggleSort('nome')" class="order-control">
-                <i *ngIf="getSort('nome') === 'ASC'" class="bi bi-chevron-up"></i>
-                <i *ngIf="getSort('nome') === 'DESC'" class="bi bi-chevron-down"></i>
-                <i *ngIf="getSort('nome') === null" class="bi bi-chevron-expand"></i>
-            </span>
-        </th>
-        <td *uiTableCell="let item;"> {{ item.nome }} </td>
-    </ng-container>
-
-    <ng-container uiTableColumn="idade">
-        <th *uiTableHeaderCell> Idade </th>
-        <td class="image" *uiTableCell="let item;"> 
-            {{ item?.idade }}
-        </td>
-    </ng-container>
-
-    <ng-container uiTableColumn="cpf" [columnInitiallyVisible]="false">
-        <th *uiTableHeaderCell> CPF </th>
-        <td *uiTableCell="let item;"> {{ item?.cpf }} </td>
-    </ng-container>
-
-    <div *uiTableLoading>
-        <div class="spinner-border" role="status">
-            <span class="visually-hidden">Loading...</span>
-        </div>
-    </div>
-
-    <tr *uiTableRow></tr>
+<table 
+    uiDataTable 
+    [columnTemplates]="columns?.toArray()"
+    [loadingTemplate]="loadingTemplate"
+    [rowTemplate]="rowTemplate"
+    [stateManager]="stateManager"
+>
     
 </table>
+
+<button (click)="show20()"> Show 20 items </button>
 
