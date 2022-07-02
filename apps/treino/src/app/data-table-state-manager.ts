@@ -52,6 +52,10 @@ export class PactoDataTableStateManager<T> {
         return this.state$.value;
     }
 
+    private getSortDirection(columnId: string) {
+        return this.state.orderBy === columnId ? this.state.orderDirection : null;
+    }
+
     getCurrentFilter(): PactoDataTableFilter {
         const { 
             totalPages,
@@ -103,19 +107,21 @@ export class PactoDataTableStateManager<T> {
         });
     }
 
-    private getSortDirection(columnId: string) {
-        return this.state.orderBy === columnId ? this.state.orderDirection : null;
-    }
-
     initializeColumnConfig(columns: PactoTableConfig[]) {
         const columnVisibility = {};
+        columns.forEach(({ id, initiallyVisible }) => {
+            columnVisibility[id] = initiallyVisible;
+        });
+        this.patchState({ columnVisibility });
+    }
+
+    showAllColumns() {
+        const columns = Object.keys(this.state.columnVisibility);
+        const columnVisibility = {};
         columns.forEach(column => {
-            const initialVisibility = column.initiallyVisible;
-            columnVisibility[column.id] = initialVisibility;
+            columnVisibility[column] = true;
         });
-        this.patchState({
-          columnVisibility
-        });
+        this.patchState({ columnVisibility });
     }
 
 }

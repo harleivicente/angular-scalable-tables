@@ -50,7 +50,7 @@ export class DataTableDirective<T> implements OnInit, AfterContentInit {
   
   ngAfterContentInit() {
     if (!this.stateManager) return;
-
+    this.initializeColumnConfig();
     this.renderTable();
     this.stateManager.state$.subscribe(() => {
         this.renderTable();
@@ -63,6 +63,14 @@ export class DataTableDirective<T> implements OnInit, AfterContentInit {
 
   get data() {
       return this.state.data;
+  }
+
+  private initializeColumnConfig() {
+    const columnConfig = this.allColumns.map(column => ({
+      id: column.uiTableColumn,
+      initiallyVisible: column.columnInitiallyVisible
+    }));
+    this.stateManager.initializeColumnConfig(columnConfig);
   }
 
   private get visibleColumns(): TableColumnDirective[] {

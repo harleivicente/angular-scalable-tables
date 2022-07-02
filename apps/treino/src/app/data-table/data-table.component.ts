@@ -25,12 +25,6 @@ export class DataTableComponent<T> implements OnInit, AfterViewInit {
     this.stateManager.update$.subscribe($event => {
       this.filterUpdate.emit($event);
     })
-
-    this.stateManager.initializeColumnConfig([
-      { id: "nome", initiallyVisible: true },
-      { id: "idade", initiallyVisible: true },
-      { id: "cpf", initiallyVisible: true }
-    ]);
   }
 
   ngAfterViewInit() {}
