@@ -183,13 +183,12 @@ export class DataTableDirective<T> implements OnInit, AfterContentInit {
 
   private buildRow(dataItem: any): HTMLElement {
     const rowCells = this.buildBodyCells(dataItem);
-
     const rowTemplate = this.activeRowTemplate.templateRef;
     const rowEmbeddedView = this.tableViewContainerRef.createEmbeddedView(rowTemplate);
     const rowNativeRef = rowEmbeddedView.rootNodes[0];
 
-    rowCells.reverse().forEach(rowCell => {
-      rowNativeRef.insertBefore(rowCell, rowNativeRef.lastChild);
+    rowCells.forEach(rowCell => {
+      rowNativeRef.insertBefore(rowCell, null);
     });
 
     return rowNativeRef;

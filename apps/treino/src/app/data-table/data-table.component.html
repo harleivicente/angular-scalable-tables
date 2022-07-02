@@ -9,7 +9,7 @@
     <button class="share" (click)="share.emit()"> Share </button>
 
     <div class="filter-wrapper">
-        <button (click)="toggleFilter()" class="filtros"> Filtros </button>
+        <button *ngIf="filterTemplate" (click)="toggleFilter()" class="filtros"> Filtros </button>
         <div class="filter-dropdown" [ngClass]="{ visible: showFilter }">
             <ng-container #filterOutlet></ng-container>
         </div>
@@ -25,6 +25,8 @@
     [stateManager]="stateManager"
 >
 
+    <tr *uiTableRow></tr>
+
     <span 
         *uiTableSortControl="let direction = direction; let triggerSortToggle = triggerSortToggle" class="sort-control"
         (click)="triggerSortToggle()"
@@ -35,6 +37,16 @@
             'bi-chevron-down': direction === 'DESC'
         }"></i>
     </span>
+
+    <tbody *uiTableLoading>
+        <tr>
+            <td>
+                <div class="spinner-border" role="status">
+                    <span class="sr-only"></span>
+                </div>
+            </td>
+        </tr>
+    </tbody>
 
 </table>
 

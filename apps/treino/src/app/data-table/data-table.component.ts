@@ -62,8 +62,10 @@ export class DataTableComponent<T> implements OnInit, OnChanges {
     this.initializeFormControls();
 
     // Build custom filter
-    const filterTemplate = this.filterTemplate.templateRef;
-    this.filterOutlet.createEmbeddedView(filterTemplate);
+    if (this.filterTemplate) {
+      const filterTemplate = this.filterTemplate.templateRef;
+      this.filterOutlet.createEmbeddedView(filterTemplate);
+    }
 
   }
 

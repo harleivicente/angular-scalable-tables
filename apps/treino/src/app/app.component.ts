@@ -1,7 +1,5 @@
-import { CollectionViewer, DataSource } from '@angular/cdk/collections';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { BehaviorSubject, Observable, of } from 'rxjs';
 import { PactoDataTableFilter, PactoDataTableResult } from './data-table-state-manager';
 import { DataTableComponent } from './data-table/data-table.component';
 import { MockService } from './mock.service';
