@@ -26,6 +26,10 @@ export class AppComponent implements OnInit {
     this.updateTable(filter);
   }
 
+  share() {
+    alert('share')
+  }
+
   private updateTable(filter: PactoDataTableFilter) {
     this.tableLoading = true;
     this.mock.getPeople(filter).subscribe(result => {

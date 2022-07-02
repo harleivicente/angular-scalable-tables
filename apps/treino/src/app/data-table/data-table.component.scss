@@ -1,8 +1,17 @@
 
+ui-data-table {
+    display: block;
+    padding: 30px;
+}
+
+.header {
+    margin: 15px 0px 30px;
+}
+
 table {
     margin: 0px;
-    width: calc(100% - 30px);
-    margin: 15px;
+    width: calc(100%);
+    // margin: 15px;
     background-color: #def8ff;
     border-spacing: 0px;
     font-family: 'Courier New', Courier, monospace;

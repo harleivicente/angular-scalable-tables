@@ -1,4 +1,13 @@
 
+
+<div class="header">
+
+    <input type="text" placeholder="Filtrar por Nome" [formControl]="filterInputFc" />
+
+    <button (click)="share.emit()"> Share </button>
+
+</div>
+
 <table 
     uiDataTable 
     [columnTemplates]="columns?.toArray()"
@@ -6,7 +15,6 @@
     [rowTemplate]="rowTemplate"
     [stateManager]="stateManager"
 >
-    
 </table>
 
 <button (click)="show20()"> Show 20 items </button>

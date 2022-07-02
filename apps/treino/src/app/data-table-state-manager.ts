@@ -60,6 +60,8 @@ export class PactoDataTableStateManager<T> {
         const { 
             totalPages,
             data,
+            columnVisibility,
+            loading,
             ...filter 
         } = this.state;
         return filter;

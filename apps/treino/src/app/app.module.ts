@@ -17,6 +17,7 @@ import { TableColumnDirective } from './table-column.directive';
 import { TableCellDirective } from './table-cell.directive';
 import { TableLoadingDirective } from './table-loading.directive';
 import { TableRowDirective } from './table-row.directive';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { TableRowDirective } from './table-row.directive';
   ],
   imports: [
     CommonModule,
-    BrowserModule, 
+    BrowserModule,
+    ReactiveFormsModule, 
     BrowserAnimationsModule,
     CdkTableModule,
     MatSliderModule
