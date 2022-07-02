@@ -10,19 +10,19 @@
                 <i *ngIf="getSort('nome') === null" class="bi bi-chevron-expand"></i>
             </span>
         </th>
-        <th *uiTableCell="let item;"> {{ item.nome }} </th>
+        <td *uiTableCell="let item;"> {{ item.nome }} </td>
     </ng-container>
 
     <ng-container uiTableColumn="idade">
         <th *uiTableHeaderCell> Idade </th>
-        <th class="image" *uiTableCell="let item;"> 
+        <td class="image" *uiTableCell="let item;"> 
             {{ item?.idade }}
-        </th>
+        </td>
     </ng-container>
 
     <ng-container uiTableColumn="cpf" [columnInitiallyVisible]="false">
         <th *uiTableHeaderCell> CPF </th>
-        <th *uiTableCell="let item;"> {{ item?.cpf }} </th>
+        <td *uiTableCell="let item;"> {{ item?.cpf }} </td>
     </ng-container>
 
     <div *uiTableLoading>

@@ -1,26 +1,23 @@
 
-button.current  {
-    font-weight: bold;
-}
-
 table {
     margin: 0px;
     width: calc(100% - 30px);
     margin: 15px;
-    background-color: beige;
+    background-color: #def8ff;
     border-spacing: 0px;
+    font-family: 'Courier New', Courier, monospace;
 
-    th {
+    td, th {
         padding: 15px;
     }
-
+    
     .order-control {
         cursor: pointer;
     }
-
+    
     tbody tr {
         &:hover {
-            background-color: lightyellow;
+            background-color: #ddf5fa;
         }
     }
 }
