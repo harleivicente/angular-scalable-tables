@@ -21,7 +21,7 @@ export class DataTableComponent<T> implements OnInit, OnChanges {
   @Output() filterUpdate: EventEmitter<PactoDataTableFilter> = new EventEmitter();
 
   constructor(
-    private stateManager: PactoDataTableStateManager<any>
+    public stateManager: PactoDataTableStateManager<any>
   ) {}
 
   ngOnInit() {
