@@ -1,19 +1,18 @@
-import { AfterContentInit, ContentChild, ContentChildren, Directive, ElementRef, EventEmitter, OnInit, Output, QueryList, Renderer2, Self, ViewContainerRef } from '@angular/core';
-import { PactoDataTableFilter, PactoDataTableStateManager } from './data-table-state-manager';
+import { AfterContentInit, ContentChild, ContentChildren, Directive, ElementRef, Input, OnInit, QueryList, Renderer2, Self, ViewContainerRef } from '@angular/core';
+import { PactoDataTableStateManager } from './data-table-state-manager';
 import { TableColumnDirective } from './table-column.directive';
 import { TableLoadingDirective } from './table-loading.directive';
 import { TableRowDirective } from './table-row.directive';
 
 @Directive({
   selector: 'table[uiDataTable]',
-  exportAs: 'uiDataTable',
-  providers: [ PactoDataTableStateManager ]
+  exportAs: 'uiDataTable'
 })
 export class DataTableDirective<T> implements OnInit, AfterContentInit {
-  @Output() filterUpdate: EventEmitter<PactoDataTableFilter>;
   @ContentChildren(TableColumnDirective) columns: QueryList<TableColumnDirective>;
   @ContentChild(TableLoadingDirective, { static: true }) loading: TableLoadingDirective;
   @ContentChild(TableRowDirective, { static: true }) row: TableRowDirective;
+  @Input() stateManager: PactoDataTableStateManager<T>;
 
   private thead;
   private tbody;
@@ -22,17 +21,14 @@ export class DataTableDirective<T> implements OnInit, AfterContentInit {
   constructor(
     private renderer: Renderer2,
     private tableElement: ElementRef,
-    @Self() public stateManager: PactoDataTableStateManager<T>,
     private tableViewContainerRef: ViewContainerRef
-  ) {
-
-    this.filterUpdate = this.stateManager.filterUpdate$;
-  }
+  ) {}
 
   ngOnInit() {}
   
   ngAfterContentInit() {
-    this.stateManager.initializeColumnConfig(this.columns.toArray());
+    if (!this.stateManager) return;
+
     this.renderTable();
     this.stateManager.state$.subscribe(() => {
         this.renderTable();
@@ -115,26 +111,8 @@ export class DataTableDirective<T> implements OnInit, AfterContentInit {
     return columns.map(column => {
       const headerCellTemplate = column.headerCell.template;
       const columnId = column.uiTableColumn;
-      const sortDirection = this.getSortDirection(columnId);
-      const embeddedViewRef = this.tableViewContainerRef.createEmbeddedView(headerCellTemplate, {
-        sortDirection,
-        toggleSort: () => {
-          return this.toggleSort(columnId);
-        }
-      });
+      const embeddedViewRef = this.tableViewContainerRef.createEmbeddedView(headerCellTemplate);
       return embeddedViewRef.rootNodes[0];
-    });
-  }
-
-  private getSortDirection(columnId: string) {
-    return this.state.orderBy === columnId ? this.state.orderDirection : null;
-  }
-
-  private toggleSort(columnId: string) {
-    const sortDirection = this.getSortDirection(columnId);
-    this.stateManager.patchState({
-      orderBy: columnId,
-      orderDirection: sortDirection === 'ASC' ? 'DESC' : 'ASC'
     });
   }
 

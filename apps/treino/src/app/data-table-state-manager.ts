@@ -1,6 +1,5 @@
-import { EventEmitter, Injectable } from "@angular/core";
+import { EventEmitter } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
-import { TableColumnDirective } from "./table-column.directive";
 
 export interface PactoDataTableState<T> {
     pageSize: number;
@@ -18,6 +17,11 @@ export interface PactoDataTableFilter {
     currentPage: number;
     orderBy?: string;
     orderDirection?: 'ASC' | 'DESC';
+}
+
+export interface PactoTableConfig {
+    id: string;
+    initiallyVisible: boolean;
 }
 
 export class PactoDataTableStateManager<T> {
@@ -73,20 +77,32 @@ export class PactoDataTableStateManager<T> {
     }
 
     setOrderState(orderBy: string, orderDirection: 'ASC' | 'DESC') {
-        const currentFilter = this.getCurrentFilter();
         this.filterUpdate$.emit({
-          ...currentFilter,
+          ...this.getCurrentFilter(),
           orderBy,
           orderDirection,
           currentPage: 1
         });
     }
 
-    initializeColumnConfig(columns: TableColumnDirective[]) {
+    toggleSort(columnId: string) {
+        const sortDirection = this.getSortDirection(columnId);
+        this.filterUpdate$.emit({
+            ...this.getCurrentFilter(),
+            orderBy: columnId,
+            orderDirection: sortDirection === 'ASC' ? 'DESC' : 'ASC'
+        });
+    }
+
+    getSortDirection(columnId: string) {
+        return this.state.orderBy === columnId ? this.state.orderDirection : null;
+    }
+
+    initializeColumnConfig(columns: PactoTableConfig[]) {
         const columnVisibility = {};
         columns.forEach(column => {
-            const initialVisibility = column.columnInitiallyVisible;
-            columnVisibility[column.uiTableColumn] = initialVisibility;
+            const initialVisibility = column.initiallyVisible;
+            columnVisibility[column.id] = initialVisibility;
         });
         this.patchState({
           columnVisibility

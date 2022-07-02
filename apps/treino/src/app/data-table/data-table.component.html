@@ -1,16 +1,16 @@
 
-<table uiDataTable (filterUpdate)="filterUpdate($event)" #table=uiDataTable>
+<table uiDataTable [stateManager]="stateManager">
 
     <ng-container uiTableColumn="nome">
-        <th *uiTableHeaderCell="let sort = sortDirection; let toggleSort = toggleSort;">
+        <th *uiTableHeaderCell>
             Nome
-            <span (click)="toggleSort()" class="order-control">
-                <i *ngIf="sort === 'ASC'" class="bi bi-chevron-up"></i>
-                <i *ngIf="sort === 'DESC'" class="bi bi-chevron-down"></i>
-                <i *ngIf="sort === null" class="bi bi-chevron-expand"></i>
+            <span (click)="stateManager.toggleSort('nome')" class="order-control">
+                <i *ngIf="getSort('nome') === 'ASC'" class="bi bi-chevron-up"></i>
+                <i *ngIf="getSort('nome') === 'DESC'" class="bi bi-chevron-down"></i>
+                <i *ngIf="getSort('nome') === null" class="bi bi-chevron-expand"></i>
             </span>
         </th>
-        <th *uiTableCell="let item;"> {{ 1 }} </th>
+        <th *uiTableCell="let item;"> {{ item.nome }} </th>
     </ng-container>
 
     <ng-container uiTableColumn="idade">
@@ -34,3 +34,4 @@
     <tr *uiTableRow></tr>
     
 </table>
+
