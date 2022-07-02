@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ContentChild, ContentChildren, EventEmitter, Input, OnChanges, OnInit, Output, QueryList, SimpleChanges, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { PactoDataTableFilter, PactoDataTableResult, PactoDataTableState, PactoDataTableStateManager } from '../data-table-state-manager';
 import { TableColumnDirective } from '../table-column.directive';
 import { TableLoadingDirective } from '../table-loading.directive';
@@ -36,9 +36,13 @@ export class DataTableComponent<T> implements OnInit, OnChanges {
   @Output() share: EventEmitter<boolean> = new EventEmitter();
 
 
-  filterInputFc: FormControl = new FormControl();
   filter: any = {};
   showFilter = false;
+  textFilterFormControl: FormControl = new FormControl();
+  pageControlFormGroup: FormGroup = new FormGroup({
+    pageSize: new FormControl(),
+    currentPage: new FormControl()
+  });
 
 
   constructor(
@@ -50,21 +54,14 @@ export class DataTableComponent<T> implements OnInit, OnChanges {
     this.stateManager.update$.subscribe((filter: PactoDataTableFilter) => {
       this.filterUpdate.emit({
         ...filter,
-        textFilter: this.filterInputFc.value,
+        textFilter: this.textFilterFormControl.value,
         filter: this.filter
       });
     })
 
-    this.filterInputFc.valueChanges.pipe(
-      debounceTime(300)
-    ).subscribe(textFilter => {
-      this.filterUpdate.emit({
-        ...this.stateManager.getCurrentFilter(),
-        textFilter,
-        filter: this.filter
-      });
-    });
+    this.initializeFormControls();
 
+    // Build custom filter
     const filterTemplate = this.filterTemplate.templateRef;
     this.filterOutlet.createEmbeddedView(filterTemplate);
 
@@ -97,9 +94,40 @@ export class DataTableComponent<T> implements OnInit, OnChanges {
     this.filter = filter;
     this.filterUpdate.emit({
       ...this.stateManager.getCurrentFilter(),
-      textFilter: this.filterInputFc.value,
+      textFilter: this.textFilterFormControl.value,
       filter: filter
     });
+  }
+
+  get Array() { return Array; }
+
+  private initializeFormControls() {
+
+    this.stateManager.state$.subscribe(state => {
+      this.pageControlFormGroup.patchValue({
+        pageSize: state.pageSize,
+        currentPage: state.currentPage
+      }, { emitEvent: false });
+    });
+
+    this.textFilterFormControl.valueChanges.pipe(
+      debounceTime(300)
+    ).subscribe(textFilter => {
+      this.filterUpdate.emit({
+        ...this.stateManager.getCurrentFilter(),
+        textFilter,
+        filter: this.filter
+      });
+    });
+
+    this.pageControlFormGroup.get('pageSize').valueChanges.subscribe(pageSize => {
+      this.stateManager.triggerPageSizeChange(parseInt(pageSize, 10));
+    });
+
+    this.pageControlFormGroup.get('currentPage').valueChanges.subscribe(currentPage => {
+      this.stateManager.triggerPageNumberChange(parseInt(currentPage, 10));
+    });
+
   }
 
 }

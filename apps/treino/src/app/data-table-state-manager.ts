@@ -3,7 +3,7 @@ import { BehaviorSubject } from "rxjs";
 
 export interface PactoDataTableState<T> {
     pageSize: number;
-    totalPages: number;
+    totalItems: number;
     currentPage: number;
     orderBy?: string;
     orderDirection?: 'ASC' | 'DESC';
@@ -14,7 +14,7 @@ export interface PactoDataTableState<T> {
 
 export interface PactoDataTableResult<T> {
     pageSize: number;
-    totalPages: number;
+    totalItems: number;
     currentPage: number;
     orderBy?: string;
     orderDirection?: 'ASC' | 'DESC';
@@ -39,7 +39,7 @@ export class PactoDataTableStateManager<T> {
         pageSize: 10,
         currentPage: 1,
         data: [],
-        totalPages: null,
+        totalItems: null,
         orderBy: null,
         orderDirection: null,
         loading: false,
@@ -48,7 +48,7 @@ export class PactoDataTableStateManager<T> {
 
     constructor() {}
 
-    private get state() {
+    public get state() {
         return this.state$.value;
     }
 
@@ -58,7 +58,7 @@ export class PactoDataTableStateManager<T> {
 
     getCurrentFilter(): PactoDataTableFilter {
         const { 
-            totalPages,
+            totalItems,
             data,
             columnVisibility,
             loading,
@@ -124,6 +124,12 @@ export class PactoDataTableStateManager<T> {
             columnVisibility[column] = true;
         });
         this.patchState({ columnVisibility });
+    }
+
+    getTotalPages() {
+        const totalItems = this.state.totalItems ? this.state.totalItems : 0;
+        const pageSize = this.state.pageSize;
+        return Math.ceil(totalItems / pageSize);
     }
 
 }

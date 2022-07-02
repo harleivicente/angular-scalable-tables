@@ -35,11 +35,27 @@
     </tbody>
 
     <div *uiDataTableFilter>
-        <select [formControl]="tipoPessoaFc">
-            <option value="fisica"> Pessoa Física </option>
-            <option value="juridica"> Pessoa Jurídica </option>
-            <option value="ambos"> Ambos </option>
-        </select>
+
+        <form [formGroup]="filterFormGroup">
+
+            <label> Tipo de pessoa </label>
+            <select formControlName="tipo">
+                <option value="fisica"> Pessoa Física </option>
+                <option value="juridica"> Pessoa Jurídica </option>
+                <option value="ambos"> Ambos </option>
+            </select>
+            
+            <label> Status da pessoa </label>
+            <select formControlName="status">
+                <option value="regular"> Regular </option>
+                <option value="bloqueado"> Bloqueado </option>
+                <option value="pendente"> Pendente </option>
+            </select>
+
+        </form>
+
+
+
     </div>
 
 </ui-data-table>

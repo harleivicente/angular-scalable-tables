@@ -2,11 +2,11 @@
 
 <div class="header">
 
-    <input type="text" placeholder="Filtrar por Nome" [formControl]="filterInputFc" />
+    <input type="text" placeholder="Filtrar" [formControl]="textFilterFormControl" />
+    
+    <div class="spacer"></div>
 
     <button class="share" (click)="share.emit()"> Share </button>
-
-    <div class="spacer"></div>
 
     <div class="filter-wrapper">
         <button (click)="toggleFilter()" class="filtros"> Filtros </button>
@@ -14,7 +14,6 @@
             <ng-container #filterOutlet></ng-container>
         </div>
     </div>
-    
 
 </div>
 
@@ -26,5 +25,28 @@
     [stateManager]="stateManager"
 >
 </table>
+
+<div class="footer">
+
+    <div class="control"> Monstrando {{ stateManager.state.data?.length }} de {{ stateManager.state.totalItems }} </div>
+
+    <form [formGroup]="pageControlFormGroup">
+
+        <select class="control" name="page-size" formControlName='pageSize'>
+            <option value="5"> 5 items </option>
+            <option value="10"> 10 items </option>
+            <option value="20"> 20 items </option>
+        </select>
+    
+        <select class="control" name="page-size" formControlName="currentPage">
+            <option value="{{ index + 1 }}" *ngFor="let item of Array(stateManager.getTotalPages()); let index = index;">
+                Página {{ index + 1 }} 
+            </option>
+        </select>
+
+    </form>
+
+
+</div>
 
 

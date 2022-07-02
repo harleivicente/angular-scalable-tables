@@ -10,7 +10,7 @@ export interface Person {
 
 interface Result<T> {
   pageSize: number;
-  totalPages: number;
+  totalItems: number;
   currentPage: number;
   orderBy?: string;
   orderDirection?: 'ASC' | 'DESC';
@@ -37,7 +37,7 @@ export class MockService {
       setTimeout(() => {
         const result = {
           ...filter,
-          totalPages: 4,
+          totalItems: 56,
           data: makeListOfRandomPeople(filter.pageSize)
         };
 
