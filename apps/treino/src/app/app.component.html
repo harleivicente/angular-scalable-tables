@@ -2,7 +2,11 @@
 
 <ui-ui-squares></ui-ui-squares> -->
 
-<ui-data-table (filterUpdate)="filterUpdate($event)">
+<ui-data-table 
+    [data]="tableData"
+    [loading]="tableLoading"
+    (filterUpdate)="filterUpdate($event)"
+>
 
     <ng-container uiTableColumn="nome">
         <th *uiTableHeaderCell> Nome </th>

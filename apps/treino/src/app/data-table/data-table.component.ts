@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, ContentChild, ContentChildren, EventEmitter, OnInit, Output, QueryList, ViewChild, ViewEncapsulation } from '@angular/core';
-import { PactoDataTableFilter, PactoDataTableResult, PactoDataTableStateManager } from '../data-table-state-manager';
+import { AfterViewInit, Component, ContentChild, ContentChildren, EventEmitter, Input, OnChanges, OnInit, Output, QueryList, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
+import { PactoDataTableFilter, PactoDataTableResult, PactoDataTableState, PactoDataTableStateManager } from '../data-table-state-manager';
 import { TableColumnDirective } from '../table-column.directive';
 import { TableLoadingDirective } from '../table-loading.directive';
 import { TableRowDirective } from '../table-row.directive';
@@ -11,14 +11,17 @@ import { TableRowDirective } from '../table-row.directive';
   providers: [PactoDataTableStateManager],
   encapsulation: ViewEncapsulation.None
 })
-export class DataTableComponent<T> implements OnInit, AfterViewInit {
+export class DataTableComponent<T> implements OnInit, OnChanges {
   @ContentChildren(TableColumnDirective) columns: QueryList<TableColumnDirective>;
   @ContentChild(TableLoadingDirective, { static: true }) loadingTemplate: TableLoadingDirective;
   @ContentChild(TableRowDirective, { static: true }) rowTemplate: TableRowDirective;
+  
+  @Input() loading: boolean;
+  @Input() data: PactoDataTableResult<T>;
   @Output() filterUpdate: EventEmitter<PactoDataTableFilter> = new EventEmitter();
 
   constructor(
-    public stateManager: PactoDataTableStateManager<any>
+    private stateManager: PactoDataTableStateManager<any>
   ) {}
 
   ngOnInit() {
@@ -27,19 +30,25 @@ export class DataTableComponent<T> implements OnInit, AfterViewInit {
     })
   }
 
-  ngAfterViewInit() {}
+  ngOnChanges(changes: SimpleChanges): void {
+    
+    let state: Partial<PactoDataTableState<T>> = {};
 
-  setLoading() {
-    this.stateManager.patchState({ loading: true });
+    if (changes.data && changes.data.currentValue) {
+      const data: PactoDataTableResult<T> = changes.data.currentValue;
+      state = { ...data };
+    }
+
+    if (changes.loading && changes.loading.currentValue !== undefined) {
+      state = {
+        ...state,
+        loading: changes.loading.currentValue
+      }
+    }
+    
+    this.stateManager.patchState(state);
   }
 
-  setTableState(result: PactoDataTableResult<T>) {
-    this.stateManager.patchState({
-      ...result,
-      loading: false
-    });
-  }
-  
   show20() {
     this.stateManager.triggerPageSizeChange(20);
   }

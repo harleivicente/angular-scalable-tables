@@ -1,7 +1,7 @@
 import { CollectionViewer, DataSource } from '@angular/cdk/collections';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { PactoDataTableFilter } from './data-table-state-manager';
+import { PactoDataTableFilter, PactoDataTableResult } from './data-table-state-manager';
 import { DataTableComponent } from './data-table/data-table.component';
 import { MockService } from './mock.service';
 
@@ -12,6 +12,8 @@ import { MockService } from './mock.service';
 })
 export class AppComponent implements OnInit {
   @ViewChild(DataTableComponent, { static: true }) table: DataTableComponent<any>;
+  tableData: PactoDataTableResult<any>;
+  tableLoading;
 
   constructor(private mock: MockService) {}
 
@@ -21,17 +23,16 @@ export class AppComponent implements OnInit {
   }
 
   filterUpdate(filter: PactoDataTableFilter) {
-    console.log(filter);
     this.updateTable(filter);
   }
 
   private updateTable(filter: PactoDataTableFilter) {
+    this.tableLoading = true;
     this.mock.getPeople(filter).subscribe(result => {
-      this.table.setTableState(result);
+      this.tableLoading = false;
+      this.tableData = result;
     });
   }
-
-  click() {}
 
 }
 
