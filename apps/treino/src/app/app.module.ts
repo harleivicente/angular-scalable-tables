@@ -8,32 +8,28 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
-import { PureTableComponent } from './pure-table/pure-table.component';
-import { UiSquaresComponent } from './ui-squares/ui-squares/ui-squares.component';
-import { SquareGameDirective } from './ui-squares/square-game.directive';
-import { SquareDirective } from './ui-squares/square.directive';
-import { DataTableComponent } from './data-table/data-table.component';
-import { DataTableDirective } from './data-table.directive';
-import { TableHeaderCellDirective } from './table-header-cell.directive';
-import { TableColumnDirective } from './table-column.directive';
-import { TableCellDirective } from './table-cell.directive';
-import { TableLoadingDirective } from './table-loading.directive';
-import { TableRowDirective } from './table-row.directive';
-import { DataTableFilterDirective } from './data-table-filter.directive';
-import { TableSortControlDirective } from './table-sort-control.directive';
-import { StyledHtmlTableComponent } from './styled-html-table/styled-html-table.component';
-import { UnstyledDataTableComponent } from './unstyled-data-table/unstyled-data-table.component';
-import { SpecializedTableComponent } from './specialized-table/specialized-table.component';
-import { StyledDataTableComponent } from './styled-data-table/styled-data-table.component';
+import { SpecializedDataTableComponent } from './specialized-data-table/specialized-data-table.component';
+
+
+import { DemoPureTableComponent } from './demo-pure-table/demo-pure-table.component';
+import { DemoSpecializedTableComponent } from './demo-specialized-table/demo-specialized-table.component';
+import { DemoStyledDataTableComponent } from './demo-styled-data-table/demo-styled-data-table.component';
+import { DemoStyledHtmlTableComponent } from './demo-styled-html-table/demo-styled-html-table.component';
+import { DemoUnstyledDataTableComponent } from './demo-unstyled-data-table/demo-unstyled-data-table.component';
+import { DataTableDirective } from './data-table/data-table.directive';
+import { TableHeaderCellDirective } from './data-table/table-header-cell.directive';
+import { TableColumnDirective } from './data-table/table-column.directive';
+import { TableCellDirective } from './data-table/table-cell.directive';
+import { TableLoadingDirective } from './data-table/table-loading.directive';
+import { TableRowDirective } from './data-table/table-row.directive';
+import { DataTableFilterDirective } from './data-table/data-table-filter.directive';
+import { TableSortControlDirective } from './data-table/table-sort-control.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PureTableComponent,
-    UiSquaresComponent,
-    SquareGameDirective,
-    SquareDirective,
-    DataTableComponent,
+    DemoPureTableComponent,
+    SpecializedDataTableComponent,
     DataTableDirective,
     TableHeaderCellDirective,
     TableColumnDirective,
@@ -42,10 +38,10 @@ import { StyledDataTableComponent } from './styled-data-table/styled-data-table.
     TableRowDirective,
     DataTableFilterDirective,
     TableSortControlDirective,
-    StyledHtmlTableComponent,
-    UnstyledDataTableComponent,
-    SpecializedTableComponent,
-    StyledDataTableComponent
+    DemoStyledHtmlTableComponent,
+    DemoUnstyledDataTableComponent,
+    DemoSpecializedTableComponent,
+    DemoStyledDataTableComponent
   ],
   imports: [
     CommonModule,
@@ -53,23 +49,23 @@ import { StyledDataTableComponent } from './styled-data-table/styled-data-table.
     RouterModule.forRoot([
       {
         path: 'manual-data-table',
-        component: PureTableComponent
+        component: DemoPureTableComponent
       },
       {
         path: 'styled-html-table',
-        component: StyledHtmlTableComponent
+        component: DemoStyledHtmlTableComponent
       },
       {
         path: 'unstyled-data-table',
-        component: UnstyledDataTableComponent
+        component: DemoUnstyledDataTableComponent
       },
       {
         path: 'styled-data-table',
-        component: StyledDataTableComponent
+        component: DemoStyledDataTableComponent
       },
       {
         path: 'specialized-table-component',
-        component: SpecializedTableComponent
+        component: DemoSpecializedTableComponent
       },
     ]),
     ReactiveFormsModule, 

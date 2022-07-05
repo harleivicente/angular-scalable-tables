@@ -1,16 +1,16 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { PactoDataTableFilter, PactoDataTableResult } from '../data-table-state-manager';
-import { DataTableComponent, TreinoTableFilter } from '../data-table/data-table.component';
+import { SpecializedDataTableComponent, TreinoTableFilter } from '../specialized-data-table/specialized-data-table.component';
 import { MockService } from '../mock.service';
+import { PactoDataTableFilter, PactoDataTableResult } from '../data-table/data-table-state-manager';
 
 @Component({
-  selector: 'ui-specialized-table',
-  templateUrl: './specialized-table.component.html',
-  styleUrls: ['./specialized-table.component.scss']
+  selector: 'ui-demo-specialized-table',
+  templateUrl: './demo-specialized-table.component.html',
+  styleUrls: ['./demo-specialized-table.component.scss']
 })
-export class SpecializedTableComponent implements OnInit {
-  @ViewChild(DataTableComponent, { static: true }) table: DataTableComponent<any>;
+export class DemoSpecializedTableComponent implements OnInit {
+  @ViewChild(SpecializedDataTableComponent, { static: true }) table: SpecializedDataTableComponent<any>;
   tableData: PactoDataTableResult<any>;
   tableLoading;
   filterFormGroup: FormGroup = new FormGroup({

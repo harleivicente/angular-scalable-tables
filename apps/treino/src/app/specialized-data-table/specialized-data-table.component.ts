@@ -1,11 +1,11 @@
 import { AfterViewInit, Component, ContentChild, ContentChildren, EventEmitter, Input, OnChanges, OnInit, Output, QueryList, SimpleChanges, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { PactoDataTableFilter, PactoDataTableResult, PactoDataTableState, PactoDataTableStateManager } from '../data-table-state-manager';
-import { TableColumnDirective } from '../table-column.directive';
-import { TableLoadingDirective } from '../table-loading.directive';
-import { TableRowDirective } from '../table-row.directive';
 import { debounceTime } from 'rxjs/operators';
-import { DataTableFilterDirective } from '../data-table-filter.directive';
+import { DataTableFilterDirective } from '../data-table/data-table-filter.directive';
+import { PactoDataTableFilter, PactoDataTableResult, PactoDataTableState, PactoDataTableStateManager } from '../data-table/data-table-state-manager';
+import { TableColumnDirective } from '../data-table/table-column.directive';
+import { TableLoadingDirective } from '../data-table/table-loading.directive';
+import { TableRowDirective } from '../data-table/table-row.directive';
 
 
 export interface TreinoTableFilter extends PactoDataTableFilter {
@@ -14,14 +14,14 @@ export interface TreinoTableFilter extends PactoDataTableFilter {
 }
 
 @Component({
-  selector: 'ui-data-table',
+  selector: 'ui-specialized-data-table',
   exportAs: 'dataTable',
-  templateUrl: './data-table.component.html',
-  styleUrls: ['./data-table.component.scss'],
+  templateUrl: './specialized-data-table.component.html',
+  styleUrls: ['./specialized-data-table.component.scss'],
   providers: [PactoDataTableStateManager],
   encapsulation: ViewEncapsulation.None
 })
-export class DataTableComponent<T> implements OnInit, OnChanges {
+export class SpecializedDataTableComponent<T> implements OnInit, OnChanges {
   @ContentChildren(TableColumnDirective) columns: QueryList<TableColumnDirective>;
   @ContentChild(TableLoadingDirective, { static: true }) loadingTemplate: TableLoadingDirective;
   @ContentChild(TableRowDirective, { static: true }) rowTemplate: TableRowDirective;

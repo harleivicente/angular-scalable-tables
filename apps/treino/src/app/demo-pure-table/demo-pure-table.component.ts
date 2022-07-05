@@ -42,11 +42,11 @@ const data = [
 ];
 
 @Component({
-  selector: 'ui-pure-table',
-  templateUrl: './pure-table.component.html',
-  styleUrls: ['./pure-table.component.scss']
+  selector: 'ui-demo-pure-table',
+  templateUrl: './demo-pure-table.component.html',
+  styleUrls: ['./demo-pure-table.component.scss']
 })
-export class PureTableComponent implements OnInit {
+export class DemoPureTableComponent implements OnInit {
 
   pureTableState$: BehaviorSubject<PureTableState> = new BehaviorSubject({
     currentPage: 1,
