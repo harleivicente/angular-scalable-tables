@@ -30,12 +30,12 @@ export interface DataRequestFilter {
 
 const data = [
   {
-    nome: 'Harlei Vicente',
+    nome: 'Teste 1',
     idade: 31,
     cpf: '123.454.343-54'
   },
   {
-    nome: 'Geovana Melo',
+    nome: 'Teste 2',
     idade: 26,
     cpf: '123.454.343-54'
   }

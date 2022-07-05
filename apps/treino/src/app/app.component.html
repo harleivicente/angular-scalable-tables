@@ -1,45 +1,11 @@
-<ui-data-table 
-    [data]="tableData"
-    [loading]="tableLoading"
-    (share)="share()"
-    (filterUpdate)="filterUpdate($event)"
->
 
-    <ng-container uiTableColumn="nome">
-        <th *uiTableHeaderCell> Nome </th>
-        <td class="nome" *uiTableCell="let item;"> {{ item.nome }} </td>
-    </ng-container>
 
-    <ng-container uiTableColumn="idade">
-        <th *uiTableHeaderCell> Idade </th>
-        <td class="idade" *uiTableCell="let item;"> 
-            {{ item?.idade }}
-        </td>
-    </ng-container>
+<header>
+    <div class="menu-item"> <a [routerLink]="'/manual-data-table'"> Manual Data Table </a> </div>
+    <div class="menu-item"> <a [routerLink]="'/styled-html-table'"> Styled Html Table </a> </div>
+    <div class="menu-item"> <a [routerLink]="'/unstyled-data-table'"> Unstyled Data Table </a> </div>
+    <div class="menu-item"> <a [routerLink]="'/styled-data-table'"> Styled Data Table </a> </div>
+    <div class="menu-item"> <a [routerLink]="'/specialized-table-component'"> Specialized Table Component </a> </div>
+</header>
 
-    <ng-container uiTableColumn="cpf">
-        <th *uiTableHeaderCell> CPF </th>
-        <td class="cpf" *uiTableCell="let item;"> {{ item?.cpf }} </td>
-    </ng-container>
-
-    <div *uiDataTableFilter>
-        <form [formGroup]="filterFormGroup">
-
-            <label> Tipo de pessoa </label>
-            <select formControlName="tipo">
-                <option value="fisica"> Pessoa Física </option>
-                <option value="juridica"> Pessoa Jurídica </option>
-                <option value="ambos"> Ambos </option>
-            </select>
-            
-            <label> Status da pessoa </label>
-            <select formControlName="status">
-                <option value="regular"> Regular </option>
-                <option value="bloqueado"> Bloqueado </option>
-                <option value="pendente"> Pendente </option>
-            </select>
-
-        </form>
-    </div>
-
-</ui-data-table>
+<router-outlet></router-outlet>

@@ -1,1 +1,18 @@
 
+
+header {
+    background-color: black;
+    color: white;
+    display: flex;
+
+    .menu-item {
+        padding: 30px 45px;
+
+        a {
+            color: white;
+            text-decoration: none;
+        }
+    }
+
+
+}

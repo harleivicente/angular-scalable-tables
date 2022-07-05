@@ -1,0 +1,45 @@
+<ui-data-table 
+    [data]="tableData"
+    [loading]="tableLoading"
+    (share)="share()"
+    (filterUpdate)="filterUpdate($event)"
+>
+
+    <ng-container uiTableColumn="nome">
+        <th *uiTableHeaderCell> Nome </th>
+        <td class="nome" *uiTableCell="let item;"> {{ item.nome }} </td>
+    </ng-container>
+
+    <ng-container uiTableColumn="idade">
+        <th *uiTableHeaderCell> Idade </th>
+        <td class="idade" *uiTableCell="let item;"> 
+            {{ item?.idade }}
+        </td>
+    </ng-container>
+
+    <ng-container uiTableColumn="cpf">
+        <th *uiTableHeaderCell> CPF </th>
+        <td class="cpf" *uiTableCell="let item;"> {{ item?.cpf }} </td>
+    </ng-container>
+
+    <div *uiDataTableFilter>
+        <form [formGroup]="filterFormGroup">
+
+            <label> Tipo de pessoa </label>
+            <select formControlName="tipo">
+                <option value="fisica"> Pessoa Física </option>
+                <option value="juridica"> Pessoa Jurídica </option>
+                <option value="ambos"> Ambos </option>
+            </select>
+            
+            <label> Status da pessoa </label>
+            <select formControlName="status">
+                <option value="regular"> Regular </option>
+                <option value="bloqueado"> Bloqueado </option>
+                <option value="pendente"> Pendente </option>
+            </select>
+
+        </form>
+    </div>
+
+</ui-data-table>

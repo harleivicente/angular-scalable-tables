@@ -3,27 +3,33 @@
     <tr>
       <th *ngIf="isColumnVisible('nome')">
         Nome 
-        <button (click)="changeOrder('nome')"> 
-          <ng-container *ngIf="state.orderBy !== 'nome'"> (-) </ng-container>
-          <ng-container *ngIf="state.orderBy == 'nome' && state.orderDirection == 'ASC'"> (A) </ng-container>
-          <ng-container *ngIf="state.orderBy == 'nome' && state.orderDirection == 'DESC'"> (D) </ng-container>
-        </button>
+        <span (click)="changeOrder('nome')"> 
+          <i class="sort-control bi bi-chevron-expand" [ngClass]="{
+            'bi-chevron-expand': state.orderBy !== 'nome',
+            'bi-chevron-up': state.orderBy == 'nome' && state.orderDirection == 'ASC',
+            'bi-chevron-down': state.orderBy == 'nome' && state.orderDirection == 'DESC'
+        }"></i>
+        </span>
       </th>
       <th *ngIf="isColumnVisible('idade')">
         Idade 
-        <button (click)="changeOrder('idade')"> 
-          <ng-container *ngIf="state.orderBy !== 'idade'"> (-) </ng-container>
-          <ng-container *ngIf="state.orderBy == 'idade' && state.orderDirection == 'ASC'"> (A) </ng-container>
-          <ng-container *ngIf="state.orderBy == 'idade' && state.orderDirection == 'DESC'"> (D) </ng-container>
-        </button>
+        <span (click)="changeOrder('idade')"> 
+          <i class="sort-control bi bi-chevron-expand" [ngClass]="{
+            'bi-chevron-expand': state.orderBy !== 'idade',
+            'bi-chevron-up': state.orderBy == 'idade' && state.orderDirection == 'ASC',
+            'bi-chevron-down': state.orderBy == 'idade' && state.orderDirection == 'DESC'
+        }"></i>
+        </span>
       </th>
       <th *ngIf="isColumnVisible('cpf')">
         CPF 
-        <button (click)="changeOrder('cpf')"> 
-          <ng-container *ngIf="state.orderBy !== 'cpf'"> (-) </ng-container>
-          <ng-container *ngIf="state.orderBy == 'cpf' && state.orderDirection == 'ASC'"> (A) </ng-container>
-          <ng-container *ngIf="state.orderBy == 'cpf' && state.orderDirection == 'DESC'"> (D) </ng-container>
-        </button>
+        <span (click)="changeOrder('cpf')"> 
+          <i class="sort-control bi bi-chevron-expand" [ngClass]="{
+            'bi-chevron-expand': state.orderBy !== 'cpf',
+            'bi-chevron-up': state.orderBy == 'cpf' && state.orderDirection == 'ASC',
+            'bi-chevron-down': state.orderBy == 'cpf' && state.orderDirection == 'DESC'
+        }"></i>
+        </span>
       </th>
     </tr>
   </thead>
@@ -62,6 +68,6 @@
   </div>
 </div>
 
-<div class="block state">
-    {{ state.data | json }}
-</div>
+<pre>
+  {{ state.data | json }}
+</pre>

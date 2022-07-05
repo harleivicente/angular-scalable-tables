@@ -2,70 +2,71 @@
 ui-data-table {
     display: block;
     padding: 30px;
-}
-
-.header {
-    margin: 15px 0px 30px;
-    display: flex;
-
-    .share { margin: 0px 15px; }
-
-    .spacer {
-        flex-grow: 1;
-    }
-}
-
-.filter-wrapper {
-    position: relative;
-
-    .filter-dropdown {
-        position: absolute;
-        background-color: #ececec;
-        border: 1px solid #c3c3c3;
-        border-radius: 3px;
-        padding: 15px;
-        display: none;
-        right: 0px;
-
-        &.visible {
-            display: block;
+    
+    .header {
+        margin: 15px 0px 30px;
+        display: flex;
+    
+        .share { margin: 0px 15px; }
+    
+        .spacer {
+            flex-grow: 1;
         }
-    }
-
-}
-
-table {
-    margin: 0px;
-    width: 100%;
-    background-color: #fafeff;
-    border-top: 1px solid #c3c3c3;
-    border-bottom: 1px solid #c3c3c3;
-    border-spacing: 0px;
-    font-family: 'Courier New', Courier, monospace;
-
-    td, th {
-        padding: 10px;
     }
     
-    tbody tr {
-        &:hover {
-            background-color: #fff2f2;
+    .filter-wrapper {
+        position: relative;
+    
+        .filter-dropdown {
+            position: absolute;
+            background-color: #ececec;
+            border: 1px solid #c3c3c3;
+            border-radius: 3px;
+            padding: 15px;
+            display: none;
+            right: 0px;
+    
+            &.visible {
+                display: block;
+            }
+        }
+    
+    }
+    
+    table {
+        margin: 0px;
+        width: 100%;
+        background-color: #fafeff;
+        border-top: 1px solid #c3c3c3;
+        border-bottom: 1px solid #c3c3c3;
+        border-spacing: 0px;
+        font-family: 'Courier New', Courier, monospace;
+    
+        td, th {
+            padding: 10px;
+        }
+        
+        tbody tr {
+            &:hover {
+                background-color: #fff2f2;
+            }
+        }
+    }
+    
+    .sort-control {
+        cursor: pointer;
+    }
+    
+    .footer {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        margin: 15px 0px;
+    
+        .control {
+            margin-left: 15px;
         }
     }
 }
 
-.sort-control {
-    cursor: pointer;
-}
-
-.footer {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    margin: 15px 0px;
-
-    .control {
-        margin-left: 15px;
-    }
-}
 
