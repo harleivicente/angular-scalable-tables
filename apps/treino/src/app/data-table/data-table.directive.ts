@@ -150,15 +150,17 @@ export class DataTableDirective<T> implements OnInit, AfterContentInit {
     const cellEmbeddedViewRef = viewContainer.createEmbeddedView(headerCellTemplate);
 
     const cellElement: HTMLElement = cellEmbeddedViewRef.rootNodes[0];
-    cellElement.insertBefore(
-      this.buildSortControl(column.uiTableColumn),
-      null
-    );
+    const sortControl = this.buildSortControl(column.uiTableColumn);
+    if (sortControl) {
+      cellElement.insertBefore(sortControl,null);
+    }
 
     return cellEmbeddedViewRef.rootNodes[0];
   }
 
   private buildSortControl(columnId: string): HTMLElement {
+    if (!this.sortTemplate) return null;
+
     const sortTemplate = this.sortTemplate.templateRef;
     const viewContainer = this.tableViewContainerRef;
     const sortEmbeddedViewRef = viewContainer.createEmbeddedView(sortTemplate, {
