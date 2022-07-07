@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CellAction } from '../cell-action.directive';
 
 @Component({
   selector: 'ui-styled-html-table',
@@ -9,7 +10,10 @@ export class DemoStyledHtmlTableComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  get CellAction() {
+    return CellAction;
   }
 
 }

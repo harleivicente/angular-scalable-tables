@@ -1,1 +1,41 @@
-<p>styled-html-table works!</p>
+
+
+<table ui-table-style>
+    <thead>
+        <tr ui-header-row-style>
+            <th ui-header-cell-style> Nome </th>
+            <th ui-header-cell-style> CPF </th>
+            <th ui-header-cell-style> Status </th>
+            <th ui-header-cell-style></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ui-row-style>
+            <td ui-cell-style> Pessoa 1 </td>
+            <td ui-cell-style> 123.345.423-56 </td>
+            <td ui-cell-style> Regular </td>
+            <td ui-cell-style>
+                <i [uiCellAction]="CellAction.EYE"></i>
+                <i [uiCellAction]="CellAction.TRASH"></i>
+            </td>
+        </tr>
+        <tr ui-row-style>
+            <td ui-cell-style> Pessoa 1 </td>
+            <td ui-cell-style> 123.345.423-56 </td>
+            <td ui-cell-style> Regular </td>
+            <td ui-cell-style>
+                <i [uiCellAction]="CellAction.EYE"></i>
+                <i [uiCellAction]="CellAction.TRASH"></i>
+            </td>
+        </tr>
+        <tr ui-row-style>
+            <td ui-cell-style> Pessoa 1 </td>
+            <td ui-cell-style> 123.345.423-56 </td>
+            <td ui-cell-style> Regular </td>
+            <td ui-cell-style>
+                <i [uiCellAction]="CellAction.EYE"></i>
+                <i [uiCellAction]="CellAction.TRASH"></i>
+            </td>
+        </tr>
+    </tbody>
+</table>

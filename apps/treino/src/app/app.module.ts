@@ -24,6 +24,12 @@ import { TableLoadingDirective } from './data-table/table-loading.directive';
 import { TableRowDirective } from './data-table/table-row.directive';
 import { DataTableFilterDirective } from './data-table/data-table-filter.directive';
 import { TableSortControlDirective } from './data-table/table-sort-control.directive';
+import { StyledTableDirective } from './styled-table/styled-table.directive';
+import { HeaderRowStyleDirective } from './styled-table/header-row-style.directive';
+import { HeaderCellStyleDirective } from './styled-table/header-cell-style.directive';
+import { CellStyleDirective } from './styled-table/cell-style.directive';
+import { RowStyleDirective } from './styled-table/row-style.directive';
+import { CellActionDirective } from './cell-action.directive';
 
 @NgModule({
   declarations: [
@@ -41,7 +47,13 @@ import { TableSortControlDirective } from './data-table/table-sort-control.direc
     DemoStyledHtmlTableComponent,
     DemoUnstyledDataTableComponent,
     DemoSpecializedTableComponent,
-    DemoStyledDataTableComponent
+    DemoStyledDataTableComponent,
+    StyledTableDirective,
+    HeaderRowStyleDirective,
+    HeaderCellStyleDirective,
+    CellStyleDirective,
+    RowStyleDirective,
+    CellActionDirective
   ],
   imports: [
     CommonModule,
