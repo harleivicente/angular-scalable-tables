@@ -1,43 +1,50 @@
 
-:host {
-  display: block;
-  padding: 45px;
-}
 
 
 table {
-  width: 100%;
-  
-  th {
-    text-align: left;
-    border-bottom: 1px solid #333;
-    padding: 5px 0px;
-  }
-  
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  width: calc(100% - 30px);
+  margin: 15px;
+
   td {
-    padding: 5px 0px;
+    padding: 10px;
   }
 
+  th {
+    border-bottom: 1px solid #808080;
+    border-top: 1px solid grey;
+    padding: 10px 10px;
+  }
+
+  tbody tr {
+
+    background-color: #ffffff;
+
+    &.dark {
+      background-color: #f8f8f8;
+    }
+
+    &:hover {
+      background-color: #f0f0f0;
+    }
+
+  }
+  
   .sort-control {
     cursor: pointer;
   }
-  
 }
 
-.state {
-  font-style: italic;
-  font-size: 10px;
-}
-
-.block {
-  margin-bottom: 60px;
-}
   
 button.bold {
   font-weight: bold;
 }
 
-.footer-controls {
+.footer {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  margin: 30px 15px;
+  > * {
+    margin: 15px 0px;
+  }
 }

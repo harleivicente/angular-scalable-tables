@@ -34,7 +34,9 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let item of state.data">
+    <tr *ngFor="let item of state.data; let odd = odd;" [ngClass]="{
+      dark: odd
+    }">
       <td *ngIf="isColumnVisible('nome')"> {{ item.nome }} </td>
       <td *ngIf="isColumnVisible('idade')"> {{ item.idade }} </td>
       <td *ngIf="isColumnVisible('cpf')"> {{ item.cpf }} </td>
@@ -42,7 +44,7 @@
   </tbody>
 </table>
   
-<div class="footer-controls block">
+<div class="footer">
 
   <div> Mostrando {{ state.data.length }} de {{ state.totalPages }} </div>
 
@@ -60,14 +62,14 @@
     <button (click)="changeCurrentPage(4)" [ngClass]="{ bold: state.currentPage === 4 }"> 4 </button>
   </div>
 
-</div>
-
-<div class="block">
-  <div *ngFor="let column of state.columns" class="visible-column">
-    <div> {{ column.id }} - <button (click)="updateColumnVisibily(column.id, !column.visible)"> {{ column.visible ? 'Hide' : 'Show' }} </button> </div>
+  <div>
+    <div *ngFor="let column of state.columns" class="visible-column">
+      <div> {{ column.id }} - <button (click)="updateColumnVisibily(column.id, !column.visible)"> {{ column.visible ? 'Hide' : 'Show' }} </button> </div>
+    </div>
   </div>
+  
+  <pre>
+    {{ state.data | json }}
+  </pre>
+  
 </div>
-
-<pre>
-  {{ state.data | json }}
-</pre>
