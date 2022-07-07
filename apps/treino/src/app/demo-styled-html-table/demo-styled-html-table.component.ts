@@ -16,4 +16,8 @@ export class DemoStyledHtmlTableComponent implements OnInit {
     return CellAction;
   }
 
+  actionClick(row, action) {
+    alert(`${row} - Action: ${action}`);
+  }
+
 }
