@@ -30,8 +30,6 @@ export class DemoUnstyledDataTableComponent implements OnInit {
         loading: false 
       });
     });
-
-
   }
 
 }

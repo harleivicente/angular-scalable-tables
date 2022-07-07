@@ -1,1 +1,45 @@
-<p>styled-data-table works!</p>
+
+
+<table ui-table-style uiDataTable [stateManager]="tableState">
+
+    <ng-container uiTableColumn="nome">
+        <th ui-header-cell-style *uiTableHeaderCell> Nome </th>
+        <td  ui-cell-style class="nome" *uiTableCell="let item;"> {{ item.nome }} </td>
+    </ng-container>
+
+    <ng-container uiTableColumn="idade">
+        <th ui-header-cell-style *uiTableHeaderCell> Idade </th>
+        <td  ui-cell-style class="idade" *uiTableCell="let item;"> 
+            {{ item?.idade }}
+        </td>
+    </ng-container>
+
+    <ng-container uiTableColumn="cpf">
+        <th ui-header-cell-style *uiTableHeaderCell> CPF </th>
+        <td  ui-cell-style class="cpf" *uiTableCell="let item;"> {{ item?.cpf }} </td>
+    </ng-container>
+
+    <tr ui-row-style *uiTableRow></tr>
+
+    <span 
+        *uiTableSortControl="let direction = direction; let triggerSortToggle = triggerSortToggle" class="sort-control"
+        (click)="triggerSortToggle()"
+    >
+        <i class="bi bi-chevron-expand sort-control" [ngClass]="{
+            'bi-chevron-expand': direction === null,
+            'bi-chevron-up': direction === 'ASC',
+            'bi-chevron-down': direction === 'DESC'
+        }"></i>
+    </span>
+
+    <tbody *uiTableLoading>
+        <tr>
+            <td>
+                <div class="spinner-border" role="status">
+                    <span class="sr-only"></span>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+
+</table>
