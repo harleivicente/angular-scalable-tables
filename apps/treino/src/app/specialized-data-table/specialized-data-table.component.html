@@ -2,14 +2,14 @@
 
 <div class="header">
 
-    <input type="text" placeholder="Filtrar" [formControl]="textFilterFormControl" />
+    <input type="text" class="form-control filtro-texto" placeholder="Filtrar" [formControl]="textFilterFormControl" />
     
     <div class="spacer"></div>
 
-    <button class="share" (click)="share.emit()"> Share </button>
+    <button type="button" class="share btn btn-primary" (click)="share.emit()"> Share </button>
 
     <div class="filter-wrapper">
-        <button *ngIf="filterTemplate" (click)="toggleFilter()" class="filtros"> Filtros </button>
+        <button type="button" *ngIf="filterTemplate" (click)="toggleFilter()" class="btn btn-primary filtros"> Filtros </button>
         <div class="filter-dropdown" [ngClass]="{ visible: showFilter }">
             <ng-container #filterOutlet></ng-container>
         </div>
@@ -50,26 +50,26 @@
 
 </table>
 
-<div class="footer">
 
-    <div class="control"> Monstrando {{ stateManager.state.data?.length }} de {{ stateManager.state.totalItems }} </div>
+<form [formGroup]="pageControlFormGroup">
 
-    <form [formGroup]="pageControlFormGroup">
+    <div class="footer">
 
-        <select class="control" name="page-size" formControlName='pageSize'>
+        <div class="control"> Monstrando {{ stateManager.state.data?.length }} de {{ stateManager.state.totalItems }} </div>
+
+        <select class="form-select control" name="page-size" formControlName='pageSize'>
             <option value="5"> 5 items </option>
             <option value="10"> 10 items </option>
             <option value="20"> 20 items </option>
         </select>
-    
-        <select class="control" name="page-size" formControlName="currentPage">
+
+        <select class="form-select control" name="page-size" formControlName="currentPage">
             <option value="{{ index + 1 }}" *ngFor="let item of Array(stateManager.getTotalPages()); let index = index;">
                 Página {{ index + 1 }} 
             </option>
         </select>
 
-    </form>
-
-</div>
+    </div>
+</form>
 
 

@@ -25,19 +25,23 @@
     <div *uiDataTableFilter>
         <form [formGroup]="filterFormGroup">
 
-            <label> Tipo de pessoa </label>
-            <select formControlName="tipo">
-                <option value="fisica"> Pessoa Física </option>
-                <option value="juridica"> Pessoa Jurídica </option>
-                <option value="ambos"> Ambos </option>
-            </select>
-            
-            <label> Status da pessoa </label>
-            <select formControlName="status">
-                <option value="regular"> Regular </option>
-                <option value="bloqueado"> Bloqueado </option>
-                <option value="pendente"> Pendente </option>
-            </select>
+            <div>
+                <label for="filtro-tipo-pessoa" class="form-label"> Tipo de pessoa </label>
+                <select id="filtro-tipo-pessoa" class="form-select" formControlName="tipo">
+                    <option value="fisica"> Pessoa Física </option>
+                    <option value="juridica"> Pessoa Jurídica </option>
+                    <option value="ambos"> Ambos </option>
+                </select>
+            </div>
+
+            <div>
+                <label for="filtro-status"> Status da pessoa </label>
+                <select id="filtro-status" class="form-select" formControlName="status">
+                    <option value="regular"> Regular </option>
+                    <option value="bloqueado"> Bloqueado </option>
+                    <option value="pendente"> Pendente </option>
+                </select>
+            </div>
 
         </form>
     </div>

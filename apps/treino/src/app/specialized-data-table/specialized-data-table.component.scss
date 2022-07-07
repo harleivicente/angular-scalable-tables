@@ -1,16 +1,52 @@
 
 ui-specialized-data-table {
-    display: block;
-    padding: 30px;
+
+    table {
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        width: calc(100% - 30px);
+        margin: 15px;
+      
+        td {
+          padding: 10px;
+        }
+      
+        th {
+          border-bottom: 1px solid #808080;
+          border-top: 1px solid grey;
+          padding: 10px 10px;
+        }
+      
+        tbody tr {
+      
+          background-color: #ffffff;
+      
+          &.dark {
+            background-color: #f8f8f8;
+          }
+      
+          &:hover {
+            background-color: #f0f0f0;
+          }
+      
+        }
+        
+        .sort-control {
+          cursor: pointer;
+        }
+      }
     
     .header {
-        margin: 15px 0px 30px;
+        margin: 15px;
         display: flex;
     
         .share { margin: 0px 15px; }
     
         .spacer {
             flex-grow: 1;
+        }
+
+        .filtro-texto {
+            max-width: 300px;
         }
     }
     
@@ -19,12 +55,14 @@ ui-specialized-data-table {
     
         .filter-dropdown {
             position: absolute;
-            background-color: #ececec;
-            border: 1px solid #c3c3c3;
-            border-radius: 3px;
+            background-color: #f8f8f8;
+            border: 1px solid #dadada;
+            border-radius: 2px;
+            width: 300px;
             padding: 15px;
             display: none;
             right: 0px;
+            top: 39px;
     
             &.visible {
                 display: block;
@@ -33,37 +71,14 @@ ui-specialized-data-table {
     
     }
     
-    table {
-        margin: 0px;
-        width: 100%;
-        background-color: #fafeff;
-        border-top: 1px solid #c3c3c3;
-        border-bottom: 1px solid #c3c3c3;
-        border-spacing: 0px;
-        font-family: 'Courier New', Courier, monospace;
-    
-        td, th {
-            padding: 10px;
-        }
-        
-        tbody tr {
-            &:hover {
-                background-color: #fff2f2;
-            }
-        }
-    }
-    
-    .sort-control {
-        cursor: pointer;
-    }
-    
     .footer {
         display: flex;
         align-items: center;
         justify-content: flex-end;
-        margin: 15px 0px;
+        margin: 15px;
     
         .control {
+            width: 160px;
             margin-left: 15px;
         }
     }
