@@ -1,0 +1,11 @@
+
+<div class="contador">
+    Contador: {{ contador$.value.valor }}
+</div>
+
+<div class="counter-list">
+    <ui-counter-block
+        [events$]="contador$"
+        *ngFor="let item of numeroCards"
+    ></ui-counter-block>
+</div>

@@ -38,6 +38,8 @@ import { StyledTextDirective } from './demo-directive-style/styled-text.directiv
 import { AvatarComponent } from './demo-component-communication/avatar/avatar.component';
 import { DemoStructuralDirectiveComponent } from './demo-structural-directive/demo-structural-directive.component';
 import { SimpleCardDirective } from './demo-structural-directive/simple-card.directive';
+import { DemoBehaviorSubjectComponent } from './demo-behavior-subject/demo-behavior-subject.component';
+import { CounterBlockComponent } from './demo-behavior-subject/counter-block/counter-block.component';
 
 @NgModule({
   declarations: [
@@ -69,12 +71,18 @@ import { SimpleCardDirective } from './demo-structural-directive/simple-card.dir
     StyledTextDirective,
     AvatarComponent,
     DemoStructuralDirectiveComponent,
-    SimpleCardDirective
+    SimpleCardDirective,
+    DemoBehaviorSubjectComponent,
+    CounterBlockComponent
   ],
   imports: [
     CommonModule,
     BrowserModule,
     RouterModule.forRoot([
+      {
+        path: 'behavior-subject',
+        component: DemoBehaviorSubjectComponent
+      },
       {
         path: 'structural-directive',
         component: DemoStructuralDirectiveComponent
