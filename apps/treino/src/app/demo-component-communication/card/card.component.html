@@ -1,6 +1,4 @@
 
-<h4> Card </h4>
-
 <div>
     Nome: {{ pessoa }}
 </div>
@@ -8,6 +6,14 @@
     Contador: {{ contador }}
 </div>
 
+<div class="content">
+    <ng-content></ng-content>
+</div>
+
 <div class="spacer"></div>
 
-<button (click)="incrementar()" class="btn btn-primary"> Incrementar </button>
+<div class="actions">
+    <button (click)="incrementar()" class="btn btn-sm btn-primary"> Incrementar </button>
+    <button (click)="showAvatar()" class="btn btn-sm btn-secondary"> Mostar Avatar </button>
+    <button (click)="hideAvatar()" class="btn btn-sm btn-secondary"> Esconder Avatar </button>
+</div>

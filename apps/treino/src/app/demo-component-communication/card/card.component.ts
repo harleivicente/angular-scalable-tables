@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ContentChild, Input, OnInit } from '@angular/core';
+import { AvatarComponent } from '../avatar/avatar.component';
 
 @Component({
   selector: 'ui-card',
@@ -7,11 +8,22 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class CardComponent implements OnInit {
   @Input() pessoa: string;
+  @ContentChild(AvatarComponent, { static: true }) avatar: AvatarComponent;
   protected contador = 0;
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.avatar);
+  }
+
+  protected showAvatar() {
+    this.avatar.showAvatar();
+  }
+
+  protected hideAvatar() {
+    this.avatar.hideAvatar();
+  }
 
   get valorAtual() {
     return this.contador;

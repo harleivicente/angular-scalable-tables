@@ -35,6 +35,7 @@ import { DemoComponentCommunicationComponent } from './demo-component-communicat
 import { CardComponent } from './demo-component-communication/card/card.component';
 import { DemoDirectiveStyleComponent } from './demo-directive-style/demo-directive-style.component';
 import { StyledTextDirective } from './demo-directive-style/styled-text.directive';
+import { AvatarComponent } from './demo-component-communication/avatar/avatar.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import { StyledTextDirective } from './demo-directive-style/styled-text.directiv
     DemoComponentCommunicationComponent,
     CardComponent,
     DemoDirectiveStyleComponent,
-    StyledTextDirective
+    StyledTextDirective,
+    AvatarComponent
   ],
   imports: [
     CommonModule,
