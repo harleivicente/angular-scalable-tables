@@ -1,0 +1,24 @@
+
+:host {
+    display: block;
+    padding: 15px;
+}
+
+.cards {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.actions {
+    margin: 5px 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid darkgrey;
+
+    button {
+        margin-right: 15px;
+    }
+
+    .total {
+        margin-top: 15px;
+    }
+}

@@ -31,6 +31,8 @@ import { CellStyleDirective } from './styled-table/cell-style.directive';
 import { RowStyleDirective } from './styled-table/row-style.directive';
 import { CellActionDirective } from './cell-action.directive';
 import { DemoTemplatesComponent } from './demo-templates/demo-templates.component';
+import { DemoComponentCommunicationComponent } from './demo-component-communication/demo-component-communication.component';
+import { CardComponent } from './demo-component-communication/card/card.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +57,9 @@ import { DemoTemplatesComponent } from './demo-templates/demo-templates.componen
     CellStyleDirective,
     RowStyleDirective,
     CellActionDirective,
-    DemoTemplatesComponent
+    DemoTemplatesComponent,
+    DemoComponentCommunicationComponent,
+    CardComponent
   ],
   imports: [
     CommonModule,
@@ -64,6 +68,10 @@ import { DemoTemplatesComponent } from './demo-templates/demo-templates.componen
       {
         path: 'templates',
         component: DemoTemplatesComponent
+      },
+      {
+        path: 'component-comunication',
+        component: DemoComponentCommunicationComponent
       },
       {
         path: 'manual-data-table',

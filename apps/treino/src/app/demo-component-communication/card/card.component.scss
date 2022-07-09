@@ -1,0 +1,17 @@
+
+:host {
+    display: block;
+    width: 200px;
+    height: 200px;
+    background-color: rgb(216, 230, 235);
+    margin: 15px;
+    padding: 15px;
+    border: 1px dashed darkblue;
+    border-radius: 3px;
+    display: flex;
+    flex-direction: column;
+}
+
+.spacer {
+    flex-grow: 1;
+}

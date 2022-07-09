@@ -5,8 +5,16 @@ header {
     color: white;
     display: flex;
 
+    &.table-menu {
+        background-color: #3c3c3c;
+    }
+
     .menu-item {
-        padding: 30px 30px;
+        padding: 15px;
+
+        &.title {
+            font-size: 16px;
+        }
 
         a {
             color: #eee4ff;

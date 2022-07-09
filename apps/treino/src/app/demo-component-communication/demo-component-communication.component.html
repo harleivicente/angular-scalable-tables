@@ -1,0 +1,13 @@
+
+
+<div class="actions">
+    <button (click)="adicionarPessoa()" class="btn btn-secondary"> Adicionar Pessoa </button>
+    <button (click)="resetarTodosCards()" class="btn btn-secondary"> Resetar contadores </button>
+    <h4 class="total"> Contador total: {{ contadorTotal }} </h4>
+</div>
+
+
+<div class="cards">
+    <ui-card *ngFor="let pessoa of pessoas" [pessoa]="pessoa"></ui-card>
+</div>
+
