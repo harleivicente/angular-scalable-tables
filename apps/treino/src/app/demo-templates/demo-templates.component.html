@@ -1,0 +1,19 @@
+
+<select class="form-select" [formControl]="selectFormControl">
+    <option value="1"> 1 card </option>
+    <option value="3"> 3 card </option>
+    <option value="5"> 5 card </option>
+    <option value="10"> 10 card </option>
+</select>
+
+<div class="card-container">
+    <ng-container #container></ng-container>
+</div>
+
+
+<ng-template #cardTemplate let-indexa="index">
+    <div class="card" >
+        <h4> Card #{{ indexa }}</h4>
+        <p> Conteúdo do card </p>
+    </div>
+</ng-template>

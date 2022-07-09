@@ -30,6 +30,7 @@ import { HeaderCellStyleDirective } from './styled-table/header-cell-style.direc
 import { CellStyleDirective } from './styled-table/cell-style.directive';
 import { RowStyleDirective } from './styled-table/row-style.directive';
 import { CellActionDirective } from './cell-action.directive';
+import { DemoTemplatesComponent } from './demo-templates/demo-templates.component';
 
 @NgModule({
   declarations: [
@@ -53,12 +54,17 @@ import { CellActionDirective } from './cell-action.directive';
     HeaderCellStyleDirective,
     CellStyleDirective,
     RowStyleDirective,
-    CellActionDirective
+    CellActionDirective,
+    DemoTemplatesComponent
   ],
   imports: [
     CommonModule,
     BrowserModule,
     RouterModule.forRoot([
+      {
+        path: 'templates',
+        component: DemoTemplatesComponent
+      },
       {
         path: 'manual-data-table',
         component: DemoPureTableComponent

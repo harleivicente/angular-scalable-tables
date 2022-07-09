@@ -1,0 +1,31 @@
+
+:host {
+    display: block;
+    padding: 30px;
+}
+
+select {
+    width: 200px;
+}
+
+.card-container {
+    background-color: #e7f9ff;
+    width: 100%;
+    padding: 15px;
+    margin-top: 30px;
+    min-height: 200px;
+    border-radius: 3px;
+    border: 2px dashed lightblue;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.card {
+    width: 150px;
+    height: 150px;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 0px;
+    background-color: white;
+    border: 1px dashed lightgrey;
+}
