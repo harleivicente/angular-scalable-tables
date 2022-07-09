@@ -1,0 +1,19 @@
+
+:host {
+    display: block;
+    padding: 30px;
+}
+
+.card-list {
+    background-color: lightgrey;
+    width: 100%;
+    min-height: 200px;
+    border: 2px dashed darkgrey;
+    border-radius: 3px;
+}
+
+
+.card {
+    padding: 5px;
+    margin: 5px;
+}

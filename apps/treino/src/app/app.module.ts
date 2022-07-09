@@ -36,6 +36,8 @@ import { CardComponent } from './demo-component-communication/card/card.componen
 import { DemoDirectiveStyleComponent } from './demo-directive-style/demo-directive-style.component';
 import { StyledTextDirective } from './demo-directive-style/styled-text.directive';
 import { AvatarComponent } from './demo-component-communication/avatar/avatar.component';
+import { DemoStructuralDirectiveComponent } from './demo-structural-directive/demo-structural-directive.component';
+import { SimpleCardDirective } from './demo-structural-directive/simple-card.directive';
 
 @NgModule({
   declarations: [
@@ -65,12 +67,18 @@ import { AvatarComponent } from './demo-component-communication/avatar/avatar.co
     CardComponent,
     DemoDirectiveStyleComponent,
     StyledTextDirective,
-    AvatarComponent
+    AvatarComponent,
+    DemoStructuralDirectiveComponent,
+    SimpleCardDirective
   ],
   imports: [
     CommonModule,
     BrowserModule,
     RouterModule.forRoot([
+      {
+        path: 'structural-directive',
+        component: DemoStructuralDirectiveComponent
+      },
       {
         path: 'directive-style',
         component: DemoDirectiveStyleComponent

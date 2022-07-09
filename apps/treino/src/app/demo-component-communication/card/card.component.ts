@@ -13,9 +13,7 @@ export class CardComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {
-    console.log(this.avatar);
-  }
+  ngOnInit() {}
 
   protected showAvatar() {
     this.avatar.showAvatar();

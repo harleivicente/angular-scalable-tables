@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'ui-root',
@@ -6,16 +6,10 @@ import { Component, OnInit, ViewChild } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  @ViewChild('[abc]', {  static: true }) abc;
 
   constructor() {}
 
-  ngOnInit() {
-    setTimeout(() => {
-      console.log(this.abc);
-    }, 3000);
-  }
-
+  ngOnInit() {}
 
 }
 
