@@ -33,6 +33,8 @@ import { CellActionDirective } from './cell-action.directive';
 import { DemoTemplatesComponent } from './demo-templates/demo-templates.component';
 import { DemoComponentCommunicationComponent } from './demo-component-communication/demo-component-communication.component';
 import { CardComponent } from './demo-component-communication/card/card.component';
+import { DemoDirectiveStyleComponent } from './demo-directive-style/demo-directive-style.component';
+import { StyledTextDirective } from './demo-directive-style/styled-text.directive';
 
 @NgModule({
   declarations: [
@@ -59,12 +61,18 @@ import { CardComponent } from './demo-component-communication/card/card.componen
     CellActionDirective,
     DemoTemplatesComponent,
     DemoComponentCommunicationComponent,
-    CardComponent
+    CardComponent,
+    DemoDirectiveStyleComponent,
+    StyledTextDirective
   ],
   imports: [
     CommonModule,
     BrowserModule,
     RouterModule.forRoot([
+      {
+        path: 'directive-style',
+        component: DemoDirectiveStyleComponent
+      },
       {
         path: 'templates',
         component: DemoTemplatesComponent
