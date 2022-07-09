@@ -1,24 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
+import { MockService, Person } from '../mock.service';
 
 
 export interface PureTableState {
-  totalPages: number;
-  currentPage: number;
   pageSize: number;
-  data: any[];
+  totalItems: number;
+  currentPage: number;
   orderBy: string;
   orderDirection: 'ASC' | 'DESC';
+  data: Person[];
   columns: { id: string, visible: boolean }[];
 }
 
 export interface DataRequestResponse {
-  totalPages: number;
-  currentPage: number;
   pageSize: number;
-  data: any[];
+  totalItems: number;
+  currentPage: number;
   orderBy: string;
   orderDirection: 'ASC' | 'DESC';
+  data: Person[];
 }
 
 export interface DataRequestFilter {
@@ -27,19 +28,6 @@ export interface DataRequestFilter {
   orderBy: string;
   orderDirection: 'ASC' | 'DESC';
 }
-
-const data = [
-  {
-    nome: 'Teste 1',
-    idade: 31,
-    cpf: '123.454.343-54'
-  },
-  {
-    nome: 'Teste 2',
-    idade: 26,
-    cpf: '123.454.343-54'
-  }
-];
 
 @Component({
   selector: 'ui-demo-pure-table',
@@ -50,9 +38,9 @@ export class DemoPureTableComponent implements OnInit {
 
   pureTableState$: BehaviorSubject<PureTableState> = new BehaviorSubject({
     currentPage: 1,
-    totalPages: 10,
-    pageSize: 5,
-    data,
+    totalItems: 0,
+    pageSize: 10,
+    data: [],
     orderBy: null,
     orderDirection: null,
     columns: [
@@ -62,9 +50,13 @@ export class DemoPureTableComponent implements OnInit {
     ]
   });
 
-  constructor() {}
+  constructor(private mock: MockService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.mock.getPeople({ currentPage: 1, pageSize: 10 }).subscribe(response => {
+      this.patchTableState(response);
+    });
+  }
 
   get state() {
     return this.pureTableState$.value;
@@ -134,8 +126,8 @@ export class DemoPureTableComponent implements OnInit {
       ...params
     };
 
-    this.fetchData(updatedRequest).subscribe(dataResponse => {
-      this.patchTableState(dataResponse);
+    this.mock.getPeople(updatedRequest).subscribe(response => {
+      this.patchTableState(response);
     });
   }
 
@@ -144,14 +136,6 @@ export class DemoPureTableComponent implements OnInit {
     this.pureTableState$.next({
       ...currentState,
       ...statePatch
-    });
-  }
-
-  fetchData(request: DataRequestFilter): Observable<DataRequestResponse> {
-    return of({
-      ...request,
-      totalPages: 10,
-      data
     });
   }
 
