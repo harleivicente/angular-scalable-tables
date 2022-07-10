@@ -2,7 +2,7 @@
 
 <table ui-table-style>
     <thead>
-        <tr ui-header-row-style>
+        <tr>
             <th ui-header-cell-style> Nome </th>
             <th ui-header-cell-style> CPF </th>
             <th ui-header-cell-style> Status </th>
@@ -17,24 +17,6 @@
             <td ui-cell-style>
                 <i (click)="actionClick('row 1', CellAction.EYE)" [uiCellAction]="CellAction.EYE"></i>
                 <i (click)="actionClick('row 1', CellAction.TRASH)" [uiCellAction]="CellAction.TRASH"></i>
-            </td>
-        </tr>
-        <tr ui-row-style>
-            <td ui-cell-style> Pessoa 1 </td>
-            <td ui-cell-style> 123.345.423-56 </td>
-            <td ui-cell-style> Regular </td>
-            <td ui-cell-style>
-                <i (click)="actionClick('row 2', CellAction.EYE)" [uiCellAction]="CellAction.EYE"></i>
-                <i (click)="actionClick('row 2', CellAction.TRASH)" [uiCellAction]="CellAction.TRASH"></i>
-            </td>
-        </tr>
-        <tr ui-row-style>
-            <td ui-cell-style> Pessoa 1 </td>
-            <td ui-cell-style> 123.345.423-56 </td>
-            <td ui-cell-style> Regular </td>
-            <td ui-cell-style>
-                <i (click)="actionClick('row 3', CellAction.EYE)" [uiCellAction]="CellAction.EYE"></i>
-                <i (click)="actionClick('row 3', CellAction.TRASH)" [uiCellAction]="CellAction.TRASH"></i>
             </td>
         </tr>
     </tbody>
