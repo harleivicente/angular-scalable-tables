@@ -5,14 +5,10 @@ import { Directive, ElementRef, OnInit } from '@angular/core';
 })
 export class CellStyleDirective implements OnInit {
 
-  private css = `
-    padding: 10px;
-  `;
-
-  constructor(private elementRef: ElementRef) {}
+  constructor(private elementRef: ElementRef<HTMLElement>) {}
 
   ngOnInit() {
-    this.elementRef.nativeElement.setAttribute("style", this.css);
+    this.elementRef.nativeElement.style.padding = "10px";
   }
 
 }
