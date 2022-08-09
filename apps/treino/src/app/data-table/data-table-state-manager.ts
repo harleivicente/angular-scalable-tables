@@ -110,6 +110,13 @@ export class PactoDataTableStateManager<T> {
         });
     }
 
+    triggerFilterChange(filter: Partial<PactoDataTableFilter>) {
+        this.update$.emit({
+            ...this.getCurrentFilter(),
+            ...filter
+        });
+    }
+
     initializeColumnConfig(columns: PactoTableConfig[]) {
         const columnVisibility = {};
         columns.forEach(({ id, initiallyVisible }) => {

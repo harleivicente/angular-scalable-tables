@@ -1,17 +1,24 @@
 import { AfterViewInit, Component, ContentChild, ContentChildren, EventEmitter, Input, OnChanges, OnInit, Output, QueryList, SimpleChanges, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { debounceTime } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { debounceTime, delay } from 'rxjs/operators';
 import { DataTableFilterDirective } from '../data-table/data-table-filter.directive';
 import { PactoDataTableFilter, PactoDataTableResult, PactoDataTableState, PactoDataTableStateManager } from '../data-table/data-table-state-manager';
 import { TableColumnDirective } from '../data-table/table-column.directive';
 import { TableLoadingDirective } from '../data-table/table-loading.directive';
 import { TableRowDirective } from '../data-table/table-row.directive';
 
-
 export interface TreinoTableFilter extends PactoDataTableFilter {
   textFilter?: string;
   filter?: any;
 }
+
+const DEFAULT_FILTER: PactoDataTableFilter = {
+  currentPage: 1,
+  pageSize: 10,
+  orderBy: null,
+  orderDirection: null
+};
 
 @Component({
   selector: 'ui-specialized-data-table',
@@ -31,6 +38,7 @@ export class SpecializedDataTableComponent<T> implements OnInit, OnChanges {
 
   @Input() loading: boolean;
   @Input() data: PactoDataTableResult<T>;
+  @Input() name: String;
 
   @Output() filterUpdate: EventEmitter<TreinoTableFilter> = new EventEmitter();
   @Output() share: EventEmitter<boolean> = new EventEmitter();
@@ -50,8 +58,16 @@ export class SpecializedDataTableComponent<T> implements OnInit, OnChanges {
   ) {}
 
   ngOnInit() {
+    this.stateManager.patchState({ loading: true });
+    this.initialStateFetch().subscribe(filter => {
+      setTimeout(() => {
+        this.stateManager.patchState({ loading: false });
+        this.stateManager.triggerFilterChange(filter);
+      });
+    });
 
     this.stateManager.update$.subscribe((filter: PactoDataTableFilter) => {
+      this.storeFilterState(filter);
       this.filterUpdate.emit({
         ...filter,
         textFilter: this.textFilterFormControl.value,
@@ -66,7 +82,26 @@ export class SpecializedDataTableComponent<T> implements OnInit, OnChanges {
       const filterTemplate = this.filterTemplate.templateRef;
       this.filterOutlet.createEmbeddedView(filterTemplate);
     }
+  }
 
+  private initialStateFetch(): Observable<PactoDataTableFilter> {
+    const state = this.fetchFilterState();
+    return of(state ? state : DEFAULT_FILTER);
+  }
+
+  private filterStateId() {
+    return `data-table-cache-${this.name}`;
+  }
+
+  private fetchFilterState(): PactoDataTableFilter {
+    const id = this.filterStateId();
+    const state = localStorage.getItem(id);
+    return state ? JSON.parse(state) : null;
+  }
+
+  private storeFilterState(filter: PactoDataTableFilter) {
+    const id = this.filterStateId();
+    localStorage.setItem(id, JSON.stringify(filter));
   }
 
   ngOnChanges(changes: SimpleChanges): void {

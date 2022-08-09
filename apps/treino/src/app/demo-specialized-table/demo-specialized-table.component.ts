@@ -21,14 +21,6 @@ export class DemoSpecializedTableComponent implements OnInit {
   constructor(private mock: MockService) {}
 
   ngOnInit() {
-    const initialFilter: PactoDataTableFilter = { 
-      currentPage: 1,
-      pageSize: 10,
-      orderBy: 'nome',
-      orderDirection: 'ASC'
-    };
-    this.updateTable(initialFilter);
-
     this.filterFormGroup.valueChanges.subscribe(filter => {
       this.table.updateFilter(filter);
     });
