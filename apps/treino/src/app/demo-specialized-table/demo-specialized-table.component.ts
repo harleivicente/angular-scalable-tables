@@ -2,7 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { SpecializedDataTableComponent, TreinoTableFilter } from '../specialized-data-table/specialized-data-table.component';
 import { MockService } from '../mock.service';
-import { PactoDataTableFilter, PactoDataTableResult } from '../data-table/data-table-state-manager';
+import { PactoDataTableFilter, PactoDataTableResult, PactoDataTableState } from '../data-table/data-table-state-manager';
+import { ShareHandlerFn } from '../specialized-data-table/export-provider.model';
+import { of } from 'rxjs';
+import { DataTableShareOptions } from '../specialized-table-export/specialized-table-export.component';
+import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'ui-demo-specialized-table',
@@ -26,12 +30,19 @@ export class DemoSpecializedTableComponent implements OnInit {
     });
   }
 
+  shareHandlerFactory(): ShareHandlerFn {
+    return (shareOptions: DataTableShareOptions, state: PactoDataTableState<any>) => {
+      return of({
+        fileToDownload: 'https://relatiro.com/34sf32423',
+        linkToOpen: null
+      }).pipe(
+        delay(100)
+      );
+    }
+  } 
+
   filterUpdate(filter: TreinoTableFilter) {
     this.updateTable(filter);
-  }
-
-  share() {
-    alert('share')
   }
 
   private updateTable(filter: PactoDataTableFilter) {
@@ -43,3 +54,5 @@ export class DemoSpecializedTableComponent implements OnInit {
   }
 
 }
+
+

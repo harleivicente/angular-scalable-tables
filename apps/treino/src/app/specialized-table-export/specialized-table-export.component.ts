@@ -1,10 +1,10 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
-enum ShareType {
-  PDF = 'PDF',
-  CSV = 'CSV',
-  WHATSAPP = 'WHATSAPP'
+export enum ShareType {
+  PDF = 'pdf',
+  CSV = 'csv',
+  WHATSAPP = 'whats'
 }
 
 export interface DataTableShareOptions {
@@ -23,8 +23,8 @@ export class SpecializedTableExportComponent implements OnInit {
   constructor() {}
 
   formGroup = new FormGroup({
+    type: new FormControl('pdf'),
     whatsapp: new FormControl(),
-    type: new FormControl()
   });
 
   protected actionClick() {
@@ -33,16 +33,21 @@ export class SpecializedTableExportComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    this.formGroup.get('type').valueChanges.subscribe(value => {
-      const number = this.formGroup.get('whatsapp');
-      if (value !== 'whats') {
-        number.disable();
-      } else {
-        number.enable();
-      }
+    this.updateWhatsupState();
+    this.formGroup.get('type').valueChanges.subscribe(() => {
+      this.updateWhatsupState();
     });
+  }
 
+  private updateWhatsupState() {
+    const formGroup = this.formGroup;
+    const numberFormControl = formGroup.get('whatsapp');
+    const type = formGroup.get('type').value;
+    if (type !== 'whats') {
+      numberFormControl.disable();
+    } else {
+      numberFormControl.enable();
+    }
   }
 
 }

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ContentChild, ContentChildren, EventEmitter, Input, OnChanges, OnInit, Output, QueryList, SimpleChanges, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, Component, ContentChild, ContentChildren, EventEmitter, Input, OnChanges, OnInit, Optional, Output, QueryList, SimpleChanges, ViewChild, ViewContainerRef, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { debounceTime, delay } from 'rxjs/operators';
@@ -7,7 +7,8 @@ import { PactoDataTableFilter, PactoDataTableResult, PactoDataTableState, PactoD
 import { TableColumnDirective } from '../data-table/table-column.directive';
 import { TableLoadingDirective } from '../data-table/table-loading.directive';
 import { TableRowDirective } from '../data-table/table-row.directive';
-import { DataTableShareOptions } from '../specialized-table-export/specialized-table-export.component';
+import { DataTableShareOptions, ShareType } from '../specialized-table-export/specialized-table-export.component';
+import { ShareHandlerFn } from './export-provider.model';
 
 export interface TreinoTableFilter extends PactoDataTableFilter {
   textFilter?: string;
@@ -41,9 +42,9 @@ export class SpecializedDataTableComponent<T> implements OnInit, OnChanges {
   @Input() data: PactoDataTableResult<T>;
   @Input() name: String;
   @Input() showExport = false;
+  @Input() shareHandlerFn: ShareHandlerFn;
 
   @Output() filterUpdate: EventEmitter<TreinoTableFilter> = new EventEmitter();
-  @Output() share: EventEmitter<boolean> = new EventEmitter();
 
 
   protected filter: any = {};
@@ -55,10 +56,7 @@ export class SpecializedDataTableComponent<T> implements OnInit, OnChanges {
     currentPage: new FormControl()
   });
 
-
-  constructor(
-    public stateManager: PactoDataTableStateManager<any>
-  ) {}
+  constructor(public stateManager: PactoDataTableStateManager<any>) {}
 
   ngOnInit() {
     this.stateManager.patchState({ loading: true });
@@ -92,7 +90,22 @@ export class SpecializedDataTableComponent<T> implements OnInit, OnChanges {
   }
 
   protected shareConfirm(shareOptions: DataTableShareOptions) {
-    console.log(shareOptions);
+    if (!this.shareHandlerFn) throw Error('Para fazer o uso da funcionalidade de share é necessário definir um shareHandlerFn');
+
+    this.shareHandlerFn(shareOptions, this.stateManager.state).subscribe(shareResult => {
+      
+      if (shareOptions.type === ShareType.PDF) {
+        console.log('SHARE: download PDF file' + shareResult.fileToDownload);
+      } else if (shareOptions.type === ShareType.WHATSAPP) {
+        console.log('SHARE: open in new tab. cel number: ' + shareOptions.whatsapp)
+      } else if (shareOptions.type === ShareType.CSV) {
+        console.log('SHARE: download CSV file' + shareResult.fileToDownload);
+      }
+
+      this.isShareDropdownOpen = false;
+
+    });
+
   }
 
   private initialStateFetch(): Observable<PactoDataTableFilter> {
