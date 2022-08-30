@@ -7,6 +7,7 @@ import { PactoDataTableFilter, PactoDataTableResult, PactoDataTableState, PactoD
 import { TableColumnDirective } from '../data-table/table-column.directive';
 import { TableLoadingDirective } from '../data-table/table-loading.directive';
 import { TableRowDirective } from '../data-table/table-row.directive';
+import { DataTableShareOptions } from '../specialized-table-export/specialized-table-export.component';
 
 export interface TreinoTableFilter extends PactoDataTableFilter {
   textFilter?: string;
@@ -39,15 +40,17 @@ export class SpecializedDataTableComponent<T> implements OnInit, OnChanges {
   @Input() loading: boolean;
   @Input() data: PactoDataTableResult<T>;
   @Input() name: String;
+  @Input() showExport = false;
 
   @Output() filterUpdate: EventEmitter<TreinoTableFilter> = new EventEmitter();
   @Output() share: EventEmitter<boolean> = new EventEmitter();
 
 
-  filter: any = {};
-  showFilter = false;
-  textFilterFormControl: FormControl = new FormControl();
-  pageControlFormGroup: FormGroup = new FormGroup({
+  protected filter: any = {};
+  protected showFilter = false;
+  protected isShareDropdownOpen = false;
+  protected textFilterFormControl: FormControl = new FormControl();
+  protected pageControlFormGroup: FormGroup = new FormGroup({
     pageSize: new FormControl(),
     currentPage: new FormControl()
   });
@@ -82,6 +85,14 @@ export class SpecializedDataTableComponent<T> implements OnInit, OnChanges {
       const filterTemplate = this.filterTemplate.templateRef;
       this.filterOutlet.createEmbeddedView(filterTemplate);
     }
+  }
+
+  protected toggleExportDropdown() {
+    this.isShareDropdownOpen = !this.isShareDropdownOpen;
+  }
+
+  protected shareConfirm(shareOptions: DataTableShareOptions) {
+    console.log(shareOptions);
   }
 
   private initialStateFetch(): Observable<PactoDataTableFilter> {

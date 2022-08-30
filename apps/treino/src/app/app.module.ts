@@ -40,6 +40,7 @@ import { DemoStructuralDirectiveComponent } from './demo-structural-directive/de
 import { SimpleCardDirective } from './demo-structural-directive/simple-card.directive';
 import { DemoBehaviorSubjectComponent } from './demo-behavior-subject/demo-behavior-subject.component';
 import { CounterBlockComponent } from './demo-behavior-subject/counter-block/counter-block.component';
+import { SpecializedTableExportComponent } from './specialized-table-export/specialized-table-export.component';
 
 @NgModule({
   declarations: [
@@ -73,7 +74,8 @@ import { CounterBlockComponent } from './demo-behavior-subject/counter-block/cou
     DemoStructuralDirectiveComponent,
     SimpleCardDirective,
     DemoBehaviorSubjectComponent,
-    CounterBlockComponent
+    CounterBlockComponent,
+    SpecializedTableExportComponent
   ],
   imports: [
     CommonModule,

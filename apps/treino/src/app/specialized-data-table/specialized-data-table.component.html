@@ -6,7 +6,12 @@
     
     <div class="spacer"></div>
 
-    <button type="button" class="share btn btn-primary" (click)="share.emit()"> Share </button>
+    <!-- Share dropdown -->
+    <div class="share-wrapper" *ngIf="showExport">
+        <button type="button" class="share btn btn-primary" (click)="toggleExportDropdown()"> Share </button>
+        <ui-specialized-table-export *ngIf="isShareDropdownOpen" (confirm)="shareConfirm($event)"></ui-specialized-table-export>
+    </div>
+
 
     <div class="filter-wrapper">
         <button type="button" *ngIf="filterTemplate" (click)="toggleFilter()" class="btn btn-primary filtros"> Filtros </button>

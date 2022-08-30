@@ -70,6 +70,17 @@ ui-specialized-data-table {
         }
     
     }
+
+    .share-wrapper {
+      position: relative;
+
+      ui-specialized-table-export {
+        position: absolute;
+        right: 15px;
+        width: 200px;
+        top: 40px;
+      }
+    }
     
     .footer {
         display: flex;
